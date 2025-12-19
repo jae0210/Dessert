@@ -1,9 +1,11 @@
-using UnityEngine;
+ï»¿using UnityEngine;
 using UnityEngine.SceneManagement;
 
 public class PlayerPersistence : MonoBehaviour
 {
     public static PlayerPersistence instance;
+
+    [SerializeField] private string titleSceneName = "K_Title"; // íƒ€ì´í‹€ ì”¬ ì´ë¦„ìœ¼ë¡œ ë§ì¶”ê¸°
 
     private void Awake()
     {
@@ -11,7 +13,6 @@ public class PlayerPersistence : MonoBehaviour
         {
             instance = this;
             DontDestroyOnLoad(gameObject);
-            // ¾À ·Îµå ÀÌº¥Æ® ¿¬°á
             SceneManager.sceneLoaded += OnSceneLoaded;
         }
         else
@@ -20,20 +21,38 @@ public class PlayerPersistence : MonoBehaviour
         }
     }
 
-    // ¾ÀÀÌ ·ÎµåµÉ ¶§¸¶´Ù È£ÃâµÊ
     private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
     {
-        // ¾À ³»¿¡ "SpawnPoint"¶ó´Â ÀÌ¸§À» °¡Áø ¿ÀºêÁ§Æ®¸¦ Ã£À½
+        // âœ… íƒ€ì´í‹€ë¡œ ëŒì•„ì˜¤ë©´ ë£¸1 í”Œë ˆì´ì–´(OVRCameraRig Variant) ì œê±°
+        if (scene.name == titleSceneName)
+        {
+            SceneManager.sceneLoaded -= OnSceneLoaded;
+            instance = null;
+            Destroy(gameObject);
+            return;
+        }
+
+        // âœ… ê²Œì„ ì”¬ì—ì„œëŠ” ìŠ¤í°í¬ì¸íŠ¸ë¡œ ì´ë™
         GameObject spawnPoint = GameObject.Find("SpawnPoint");
         if (spawnPoint != null)
         {
-            transform.position = spawnPoint.transform.position;
+            // (ì¶”ì²œ) ì‹¤ì œ ì¹´ë©”ë¼(ë¨¸ë¦¬) ìœ„ì¹˜ê°€ SpawnPointì— ë§ë„ë¡ ë³´ì •
+            Camera cam = GetComponentInChildren<Camera>(true);
+            if (cam != null)
+            {
+                Vector3 rigToHead = cam.transform.position - transform.position;
+                transform.position = spawnPoint.transform.position - rigToHead;
+                transform.rotation = spawnPoint.transform.rotation;
+            }
+            else
+            {
+                transform.SetPositionAndRotation(spawnPoint.transform.position, spawnPoint.transform.rotation);
+            }
         }
     }
 
     private void OnDestroy()
     {
-        // ÀÌº¥Æ® ÇØÁ¦ (¸Ş¸ğ¸® ´©¼ö ¹æÁö)
         SceneManager.sceneLoaded -= OnSceneLoaded;
     }
 }
