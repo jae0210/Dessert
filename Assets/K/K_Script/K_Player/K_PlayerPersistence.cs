@@ -1,9 +1,9 @@
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-public class PlayerPersistence : MonoBehaviour
+public class K_PlayerPersistence : MonoBehaviour
 {
-    public static PlayerPersistence instance;
+    public static K_PlayerPersistence instance;
 
     private void Awake()
     {
