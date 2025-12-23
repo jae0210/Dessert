@@ -5,8 +5,6 @@ public class PlayerPersistence : MonoBehaviour
 {
     public static PlayerPersistence instance;
 
-    [SerializeField] private string titleSceneName = "K_Title"; // 타이틀 씬 이름으로 맞추기
-
     private void Awake()
     {
         if (instance == null)
@@ -21,22 +19,18 @@ public class PlayerPersistence : MonoBehaviour
         }
     }
 
+    public void DestroySelf()
+    {
+        SceneManager.sceneLoaded -= OnSceneLoaded;
+        instance = null;
+        Destroy(gameObject);
+    }
+
     private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
     {
-        // ✅ 타이틀로 돌아오면 룸1 플레이어(OVRCameraRig Variant) 제거
-        if (scene.name == titleSceneName)
-        {
-            SceneManager.sceneLoaded -= OnSceneLoaded;
-            instance = null;
-            Destroy(gameObject);
-            return;
-        }
-
-        // ✅ 게임 씬에서는 스폰포인트로 이동
         GameObject spawnPoint = GameObject.Find("SpawnPoint");
         if (spawnPoint != null)
         {
-            // (추천) 실제 카메라(머리) 위치가 SpawnPoint에 맞도록 보정
             Camera cam = GetComponentInChildren<Camera>(true);
             if (cam != null)
             {
