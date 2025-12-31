@@ -37,7 +37,7 @@ public class J_PollManager : MonoBehaviour
     private int[] votes;
     private Dictionary<string, int> idToIndex = new Dictionary<string, int>();
 
-    // ★ 유저가 무엇에 투표했는지 저장 (재투표용)
+    // 유저가 무엇에 투표했는지 저장 (재투표용)
     private Dictionary<string, int> userChoiceIndex = new Dictionary<string, int>();
 
     public event Action OnChanged;
@@ -46,9 +46,20 @@ public class J_PollManager : MonoBehaviour
     {
         currentPoll = poll;
 
+        if (poll == null || poll.options == null)
+        {
+            votes = null;
+            idToIndex.Clear();
+            userChoiceIndex.Clear();
+            OnChanged?.Invoke();
+            return;
+        }
+
         votes = new int[poll.options.Count];
+
         idToIndex = poll.options
             .Select((opt, idx) => new { opt.id, idx })
+            .Where(x => !string.IsNullOrEmpty(x.id))
             .ToDictionary(x => x.id, x => x.idx);
 
         userChoiceIndex.Clear();
@@ -65,10 +76,13 @@ public class J_PollManager : MonoBehaviour
         OnChanged?.Invoke();
     }
 
-    // ★ 같은 유저가 다시 투표하면 "표 이동"
+    // 같은 유저가 다시 투표하면 "표 이동"
     public bool VoteOrChange(string userKey, string optionId)
     {
         if (currentPoll == null) return false;
+        if (string.IsNullOrEmpty(userKey)) userKey = "local";
+        if (string.IsNullOrEmpty(optionId)) return false;
+
         if (!idToIndex.TryGetValue(optionId, out int newIdx)) return false;
 
         // 이미 투표한 적 있으면 이전 표를 빼고 새 표를 더함
@@ -105,6 +119,9 @@ public class J_PollManager : MonoBehaviour
     private void SaveIfNeeded(int idx)
     {
         if (!persistToPlayerPrefs) return;
+        if (currentPoll == null || currentPoll.options == null) return;
+        if (idx < 0 || idx >= currentPoll.options.Count) return;
+
         string key = prefsKeyPrefix + currentPoll.options[idx].id;
         PlayerPrefs.SetInt(key, votes[idx]);
         PlayerPrefs.Save();
@@ -118,8 +135,12 @@ public class J_PollManager : MonoBehaviour
         return total;
     }
 
+    // 동점 같은 순위(1,1,3) + percent 소수 1자리 반올림
     public List<J_PollResultEntry> GetRankedResults()
     {
+        if (currentPoll == null || currentPoll.options == null)
+            return new List<J_PollResultEntry>();
+
         int total = GetTotalVotes();
         var list = new List<J_PollResultEntry>();
 
@@ -127,6 +148,9 @@ public class J_PollManager : MonoBehaviour
         {
             var opt = currentPoll.options[i];
             float pct = (total == 0) ? 0f : (votes[i] * 100f / total);
+
+            // 소수 1자리 반올림(33.34 -> 33.3)
+            pct = Mathf.Round(pct * 10f) / 10f;
 
             list.Add(new J_PollResultEntry
             {
@@ -138,13 +162,23 @@ public class J_PollManager : MonoBehaviour
             });
         }
 
+        // 득표 desc, 라벨 asc
         list = list.OrderByDescending(x => x.votes).ThenBy(x => x.label).ToList();
 
-        for (int r = 0; r < list.Count; r++)
+        int rank = 0;
+        int prevVotes = int.MinValue;
+
+        for (int i = 0; i < list.Count; i++)
         {
-            var e = list[r];
-            e.rank = r + 1;
-            list[r] = e;
+            var e = list[i];
+
+            if (i == 0) rank = 1;
+            else if (e.votes < prevVotes) rank = i + 1;   // 동점이면 rank 유지
+
+            e.rank = rank;
+            prevVotes = e.votes;
+
+            list[i] = e;
         }
 
         return list;
@@ -152,7 +186,7 @@ public class J_PollManager : MonoBehaviour
 
     public void ResetSavedVotes()
     {
-        if (currentPoll == null) return;
+        if (currentPoll == null || currentPoll.options == null) return;
 
         foreach (var opt in currentPoll.options)
             PlayerPrefs.DeleteKey(prefsKeyPrefix + opt.id);
