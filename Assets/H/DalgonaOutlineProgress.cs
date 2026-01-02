@@ -25,6 +25,11 @@ public class DalgonaOutlineProgress : MonoBehaviour
     [Range(0f, 1f)] public float hapticAmplitude = 0.25f;
     [Range(0f, 1f)] public float hapticFrequency = 0.6f;
 
+    [Header("Carving Input (Hold Grip to Carve)")]
+    public bool requireGripToCarve = true;
+    public OVRInput.Controller carveController = OVRInput.Controller.RTouch;
+    [Range(0f, 1f)] public float gripThreshold = 0.1f; // 이 값 이상이면 "누르고 있다"로 인정
+
     [Header("Debug")]
     public bool debugLogProgress = true;
     public bool debugLogOnPath = false;
@@ -106,6 +111,18 @@ public class DalgonaOutlineProgress : MonoBehaviour
         if (!dalgona || !needleTip || pts == null || pts.Length < 3 || visited == null || visited.Length == 0)
             return;
 
+        // ✅ 그립 누르고 있을 때만 "깎기" 판정 실행
+        if (requireGripToCarve)
+        {
+            float grip = OVRInput.Get(OVRInput.Axis1D.PrimaryHandTrigger, carveController);
+            if (grip < gripThreshold)
+            {
+                // 그립 안 누르면: 진동 끄고, 진행/크랙 계산도 안 함
+                StopHaptics();
+                return;
+            }
+        }
+
         // Tip을 dalgona 로컬로 변환 후 평면 투영
         Vector3 p = dalgona.InverseTransformPoint(needleTip.position);
         p.y = 0f;
@@ -151,7 +168,7 @@ public class DalgonaOutlineProgress : MonoBehaviour
         lastClosestLocal = bestClosest;
         lastOnPath = onPath;
 
-        // ✅ 라인 위면 진동, 아니면 끄기
+        // ✅ 라인 위면 진동, 아니면 끄기 (그립 누르고 있을 때만 실행됨)
         if (hapticsOnPath)
         {
             if (onPath) OVRInput.SetControllerVibration(hapticFrequency, hapticAmplitude, hapticController);
