@@ -246,6 +246,163 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   optionId: beoksulgi
   displayName: "\uBC31\uC124\uAE30"
+--- !u!1001 &75961815
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 1137474750063054730, guid: 03b77f4eaaf41ce45a064df9bd292861, type: 3}
+      propertyPath: m_Text
+      value: "\uC57D\uACFC(\u85E5\u679C, yakgwa)\uB294 \uD55C\uACFC \uAC00\uC6B4\uB370
+        \uC720\uBC00\uACFC\uC758 \uD55C \uC885\uB958\uC774\uB2E4.\r\n\r\n\uC804\uD1B5\uC801\uC778
+        \uC57D\uACFC \uC870\uB9AC\uBC95\uC740 \uC74C\uC2DD\uB514\uBBF8\uBC29, \uADDC\uD569\uCD1D\uC11C
+        \uB4F1 \uC61B \uC870\uB9AC\uC11C\uC5D0 \uC218\uB85D\uB418\uC5B4 \uC788\uC73C\uBA70,
+        \uBAA8\uC57D\uACFC(\uAC1C\uC131\uC57D\uACFC), \uB9CC\uB450\uACFC, \uC5F0\uC57D\uACFC
+        \uB4F1\uC758 \uC138\uBD80 \uC885\uB958\uB85C \uB098\uB25C\uB2E4.\n \uB9CC\uB450\uACFC\uB294
+        \uADF8 \uC774\uB984\uB300\uB85C \uC57D\uACFC\uB97C \uD53C \uC0BC\uC544 \uC18C(\uBCF4\uD1B5
+        \uB300\uCD94)\uB97C \uB123\uACE0 \uC1A1\uD3B8\uCC98\uB7FC \uBE5A\uC740 \uAC83\uC774\uACE0,
+        \uC5F0\uC57D\uACFC\uB294 \uBCF6\uC740 \uBC00\uAC00\uB8E8\uB85C \uB9CC\uB4DC\uB294
+        \uAC83\uC774\uB2E4. \n\uC790\uC138\uD55C \uAC74 \uC774\uACF3 \uCC38\uC870.
+        \uACE0\uC6B4 \uCCB4\uB85C \uAC70\uB978 \uBC00\uAC00\uB8E8\uC5D0 \uCC38\uAE30\uB984
+        \uB4F1\uC744 \uCE58\uACE0, \uAC70\uAE30\uC5D0 \uC870\uCCAD\uACFC \uC220\uC744
+        \uB123\uACE0 \uBC18\uC8FD\uD558\uC5EC \uC57D\uACFC\uD310\uC5D0 \uCC0D\uC5B4\uC11C
+        \uBB34\uB2AC\uB97C \uC0C8\uAE34 \uD6C4 \uAE30\uB984\uC5D0 \uD280\uACA8 \uB9CC\uB4E0\uB2E4."
+      objectReference: {fileID: 0}
+    - target: {fileID: 1137474750063054730, guid: 03b77f4eaaf41ce45a064df9bd292861, type: 3}
+      propertyPath: m_Color.b
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1137474750063054730, guid: 03b77f4eaaf41ce45a064df9bd292861, type: 3}
+      propertyPath: m_Color.g
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1137474750063054730, guid: 03b77f4eaaf41ce45a064df9bd292861, type: 3}
+      propertyPath: m_Color.r
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1137474750063054730, guid: 03b77f4eaaf41ce45a064df9bd292861, type: 3}
+      propertyPath: m_FontData.m_FontSize
+      value: 20
+      objectReference: {fileID: 0}
+    - target: {fileID: 1137474750063054730, guid: 03b77f4eaaf41ce45a064df9bd292861, type: 3}
+      propertyPath: m_FontData.m_FontStyle
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1137474750063054730, guid: 03b77f4eaaf41ce45a064df9bd292861, type: 3}
+      propertyPath: m_FontData.m_LineSpacing
+      value: 1.1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2437457175011125115, guid: 03b77f4eaaf41ce45a064df9bd292861, type: 3}
+      propertyPath: m_Name
+      value: "\uC561\uC790"
+      objectReference: {fileID: 0}
+    - target: {fileID: 2609086094085161201, guid: 03b77f4eaaf41ce45a064df9bd292861, type: 3}
+      propertyPath: m_Color.a
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3069280998600719809, guid: 03b77f4eaaf41ce45a064df9bd292861, type: 3}
+      propertyPath: m_LocalScale.y
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 3069280998600719809, guid: 03b77f4eaaf41ce45a064df9bd292861, type: 3}
+      propertyPath: m_LocalScale.z
+      value: 186.696
+      objectReference: {fileID: 0}
+    - target: {fileID: 3069280998600719809, guid: 03b77f4eaaf41ce45a064df9bd292861, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 14.65
+      objectReference: {fileID: 0}
+    - target: {fileID: 3069280998600719809, guid: 03b77f4eaaf41ce45a064df9bd292861, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 3.903
+      objectReference: {fileID: 0}
+    - target: {fileID: 3069280998600719809, guid: 03b77f4eaaf41ce45a064df9bd292861, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: -1.02
+      objectReference: {fileID: 0}
+    - target: {fileID: 3069280998600719809, guid: 03b77f4eaaf41ce45a064df9bd292861, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 3069280998600719809, guid: 03b77f4eaaf41ce45a064df9bd292861, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: -0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 3069280998600719809, guid: 03b77f4eaaf41ce45a064df9bd292861, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: -0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 3069280998600719809, guid: 03b77f4eaaf41ce45a064df9bd292861, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: -0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 3069280998600719809, guid: 03b77f4eaaf41ce45a064df9bd292861, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: -90
+      objectReference: {fileID: 0}
+    - target: {fileID: 3069280998600719809, guid: 03b77f4eaaf41ce45a064df9bd292861, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: -90
+      objectReference: {fileID: 0}
+    - target: {fileID: 3069280998600719809, guid: 03b77f4eaaf41ce45a064df9bd292861, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects:
+    - {fileID: 7178603596342148051, guid: 03b77f4eaaf41ce45a064df9bd292861, type: 3}
+    m_AddedGameObjects: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 2437457175011125115, guid: 03b77f4eaaf41ce45a064df9bd292861, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 75961818}
+  m_SourcePrefab: {fileID: 100100000, guid: 03b77f4eaaf41ce45a064df9bd292861, type: 3}
+--- !u!1 &75961816 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 2437457175011125115, guid: 03b77f4eaaf41ce45a064df9bd292861, type: 3}
+  m_PrefabInstance: {fileID: 75961815}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &75961817 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 1137474750063054730, guid: 03b77f4eaaf41ce45a064df9bd292861, type: 3}
+  m_PrefabInstance: {fileID: 75961815}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5f7201a12d95ffc409449d95f23cf332, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &75961818
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 75961816}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 812f0addf1d58a1469c2f688b34baf31, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  myLegacyText: {fileID: 75961817}
+  initialMessage: "\uC57D\uACFC(\u85E5\u679C, yakgwa)\uB294 \uD55C\uACFC \uAC00\uC6B4\uB370
+    \uC720\uBC00\uACFC\uC758 \uD55C \uC885\uB958\uC774\uB2E4.\r\n\r\n\uC804\uD1B5\uC801\uC778
+    \uC57D\uACFC \uC870\uB9AC\uBC95\uC740 \uC74C\uC2DD\uB514\uBBF8\uBC29, \uADDC\uD569\uCD1D\uC11C
+    \uB4F1 \uC61B \uC870\uB9AC\uC11C\uC5D0 \uC218\uB85D\uB418\uC5B4 \uC788\uC73C\uBA70,
+    \uBAA8\uC57D\uACFC(\uAC1C\uC131\uC57D\uACFC), \uB9CC\uB450\uACFC, \uC5F0\uC57D\uACFC
+    \uB4F1\uC758 \uC138\uBD80 \uC885\uB958\uB85C \uB098\uB25C\uB2E4.\n \uB9CC\uB450\uACFC\uB294
+    \uADF8 \uC774\uB984\uB300\uB85C \uC57D\uACFC\uB97C \uD53C \uC0BC\uC544 \uC18C(\uBCF4\uD1B5
+    \uB300\uCD94)\uB97C \uB123\uACE0 \uC1A1\uD3B8\uCC98\uB7FC \uBE5A\uC740 \uAC83\uC774\uACE0,
+    \uC5F0\uC57D\uACFC\uB294 \uBCF6\uC740 \uBC00\uAC00\uB8E8\uB85C \uB9CC\uB4DC\uB294
+    \uAC83\uC774\uB2E4. \n\uC790\uC138\uD55C \uAC74 \uC774\uACF3 \uCC38\uC870. \uACE0\uC6B4
+    \uCCB4\uB85C \uAC70\uB978 \uBC00\uAC00\uB8E8\uC5D0 \uCC38\uAE30\uB984 \uB4F1\uC744
+    \uCE58\uACE0, \uAC70\uAE30\uC5D0 \uC870\uCCAD\uACFC \uC220\uC744 \uB123\uACE0
+    \uBC18\uC8FD\uD558\uC5EC \uC57D\uACFC\uD310\uC5D0 \uCC0D\uC5B4\uC11C \uBB34\uB2AC\uB97C
+    \uC0C8\uAE34 \uD6C4 \uAE30\uB984\uC5D0 \uD280\uACA8 \uB9CC\uB4E0\uB2E4."
 --- !u!1 &110383779
 GameObject:
   m_ObjectHideFlags: 0
@@ -1962,7 +2119,7 @@ MonoBehaviour:
   m_HandleRect: {fileID: 115525410}
   m_Direction: 2
   m_Value: 0
-  m_Size: 1
+  m_Size: 0.9999794
   m_NumberOfSteps: 0
   m_OnValueChanged:
     m_PersistentCalls:
@@ -3236,7 +3393,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: -109.274956}
+  m_AnchoredPosition: {x: 0, y: -109.27499}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &770855040
@@ -9933,3 +10090,4 @@ SceneRoots:
   - {fileID: 1103722897}
   - {fileID: 112122772}
   - {fileID: 314396796}
+  - {fileID: 75961815}
