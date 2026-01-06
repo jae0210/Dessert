@@ -48,6 +48,14 @@ public partial class J_PollUI : MonoBehaviour
     public Button revoteButton;        // 다시 투표하기
     public Button adminResetButton;    // 초기화(관리자만)
 
+    [Header("Admin Reset Safety")]
+    public bool adminResetHiddenByDefault = true;
+    public float adminRevealSeconds = 8f;
+    public KeyCode adminRevealKey = KeyCode.R;
+
+    bool adminRevealActive;
+    float adminRevealUntil;
+
     // runtime
     readonly List<GameObject> spawnedOptionBtns = new List<GameObject>();
     readonly Dictionary<string, J_VoteResultCardRow> cardByKey = new Dictionary<string, J_VoteResultCardRow>();
@@ -91,11 +99,34 @@ public partial class J_PollUI : MonoBehaviour
         // 관리자 초기화 버튼(관리자만 보이기)
         if (adminResetButton != null)
         {
-            bool isAdmin = (gsheetClient != null && gsheetClient.IsAdmin);
-            adminResetButton.gameObject.SetActive(isAdmin);
+            // 무조건 숨김(표시는 안전장치 스크립트가 담당)
+            adminResetButton.gameObject.SetActive(false);
 
+            // J_PollUI가 여기서 onClick을 세팅하지 않게
             adminResetButton.onClick.RemoveAllListeners();
-            adminResetButton.onClick.AddListener(OnClickAdminReset);
+        }
+    }
+
+    void Update()
+    {
+        if (adminResetButton == null) return;
+        if (gsheetClient == null || !gsheetClient.IsAdmin) return;
+        if (!adminResetHiddenByDefault) return;
+
+        bool ctrl = Input.GetKey(KeyCode.LeftControl) || Input.GetKey(KeyCode.RightControl);
+        bool shift = Input.GetKey(KeyCode.LeftShift) || Input.GetKey(KeyCode.RightShift);
+
+        if (ctrl && shift && Input.GetKeyDown(adminRevealKey))
+        {
+            adminRevealActive = true;
+            adminRevealUntil = Time.unscaledTime + Mathf.Max(1f, adminRevealSeconds);
+            adminResetButton.gameObject.SetActive(true);
+        }
+
+        if (adminRevealActive && Time.unscaledTime > adminRevealUntil)
+        {
+            adminRevealActive = false;
+            adminResetButton.gameObject.SetActive(false);
         }
     }
 
