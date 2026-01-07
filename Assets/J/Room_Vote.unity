@@ -1457,11 +1457,11 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: -8679921383154817045, guid: fedef1035bbd4594193ba197708c3bd0, type: 3}
       propertyPath: m_LocalScale.x
-      value: 0.07619896
+      value: 0.08833091
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: fedef1035bbd4594193ba197708c3bd0, type: 3}
       propertyPath: m_LocalScale.y
-      value: 0.05019647
+      value: 0.05755025
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: fedef1035bbd4594193ba197708c3bd0, type: 3}
       propertyPath: m_LocalScale.z
@@ -2201,7 +2201,7 @@ MonoBehaviour:
   m_HandleRect: {fileID: 115525410}
   m_Direction: 2
   m_Value: 0
-  m_Size: 1
+  m_Size: 0.99946207
   m_NumberOfSteps: 0
   m_OnValueChanged:
     m_PersistentCalls:
@@ -3474,7 +3474,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: -109.274765}
+  m_AnchoredPosition: {x: 0, y: -109.274414}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &770855040
@@ -4486,7 +4486,7 @@ Transform:
   m_GameObject: {fileID: 1006964261}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0.014953646}
+  m_LocalPosition: {x: 0, y: -0, z: 0.01512}
   m_LocalScale: {x: 1, y: 1, z: 0.5123871}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -7879,7 +7879,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   rotationSpeed: 30
-  rotationAxis: {x: 0, y: 0, z: 0}
+  rotationAxis: {x: 0, y: 1, z: 0}
 --- !u!114 &1586169944
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -9607,7 +9607,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: -0.7071068, y: -0, z: -0, w: 0.7071067}
   m_LocalPosition: {x: -2.0367126, y: 0.98328185, z: 0.9145267}
-  m_LocalScale: {x: 88.56063, y: 78.74122, z: 119.53031}
+  m_LocalScale: {x: 55, y: 50, z: 140}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1006964262}
