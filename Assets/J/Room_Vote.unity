@@ -1694,6 +1694,10 @@ PrefabInstance:
       value: Yakgua
       objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: fedef1035bbd4594193ba197708c3bd0, type: 3}
+      propertyPath: m_Layer
+      value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: fedef1035bbd4594193ba197708c3bd0, type: 3}
       propertyPath: m_IsActive
       value: 1
       objectReference: {fileID: 0}
@@ -1719,6 +1723,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: fedef1035bbd4594193ba197708c3bd0, type: 3}
       insertIndex: -1
       addedObject: {fileID: 1586169951}
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: fedef1035bbd4594193ba197708c3bd0, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1586169952}
   m_SourcePrefab: {fileID: 100100000, guid: fedef1035bbd4594193ba197708c3bd0, type: 3}
 --- !u!1 &277337087
 GameObject:
@@ -2395,7 +2402,7 @@ MonoBehaviour:
   m_HandleRect: {fileID: 115525410}
   m_Direction: 2
   m_Value: 0
-  m_Size: 1
+  m_Size: 0.99998593
   m_NumberOfSteps: 0
   m_OnValueChanged:
     m_PersistentCalls:
@@ -3668,7 +3675,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: -109.27497}
+  m_AnchoredPosition: {x: 0, y: -109.27498}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &770855040
@@ -8366,6 +8373,25 @@ SphereCollider:
   serializedVersion: 3
   m_Radius: 0.04
   m_Center: {x: -0.00026544923, y: 0.00008157452, z: 0.00047201055}
+--- !u!114 &1586169952
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1586169939}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 661efc61bfa0af44fb496babb42f2ffe, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  leftGrabber: {fileID: 1279756518}
+  rightGrabber: {fileID: 1828005348}
+  leftGripTransform: {fileID: 1604701806}
+  rightGripTransform: {fileID: 106426203}
+  secondaryGrabDistance: 0.15
+  useIndexTrigger: 0
+  pressThreshold: 0.55
 --- !u!1 &1586331183
 GameObject:
   m_ObjectHideFlags: 0
@@ -9364,6 +9390,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8cbba063117ab0f4a99ed14b4b667690, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  lineRenderer: {fileID: 1828005347}
+  maxDistance: 3
+  rayMask:
+    serializedVersion: 2
+    m_Bits: 247
+  disableWhileGripping: 1
+  useIndexTrigger: 0
+  triggerThreshold: 0.55
+  isRightHand: 1
 --- !u!1001 &1833164958
 PrefabInstance:
   m_ObjectHideFlags: 0
