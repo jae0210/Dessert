@@ -26,6 +26,10 @@ public class K_ReturnToHome_OVR : MonoBehaviour
     [Header("Held 중 손과 충돌 무시(흔들림 방지)")]
     public bool ignoreHandCollisionsWhileHeld = true;
 
+    [Header("Held 중 플레이어 캡슐과 충돌 무시(밀림 방지)")]
+    public bool ignorePlayerCapsuleWhileHeld = true;
+    public CharacterController playerCC; // 비워두면 자동 탐색
+
     OVRGrabbable grabbable;
     Rigidbody rb;
     K_Rotator rotator;
@@ -41,6 +45,7 @@ public class K_ReturnToHome_OVR : MonoBehaviour
     // 충돌 무시용
     Collider[] objCols;
     Collider[] handCols;
+    bool playerIgnored;
 
     void Awake()
     {
@@ -49,6 +54,13 @@ public class K_ReturnToHome_OVR : MonoBehaviour
         rotator = GetComponent<K_Rotator>();
 
         objCols = GetComponentsInChildren<Collider>(true);
+
+        // 플레이어 캡슐 자동 찾기
+        if (playerCC == null)
+        {
+            var p = FindObjectOfType<OVRPlayerController>();
+            if (p != null) playerCC = p.GetComponent<CharacterController>();
+        }
 
         if (home == null)
         {
@@ -64,9 +76,16 @@ public class K_ReturnToHome_OVR : MonoBehaviour
         SetIdlePhysics(); // 시작은 전시 상태
     }
 
+    void OnDisable()
+    {
+        RestoreHandCollisions();
+        IgnorePlayerCapsule(false);
+    }
+
     void OnDestroy()
     {
         RestoreHandCollisions();
+        IgnorePlayerCapsule(false);
     }
 
     void Update()
@@ -89,22 +108,25 @@ public class K_ReturnToHome_OVR : MonoBehaviour
         if (disableRotationWhileHeld && rotator != null)
             rotator.enabled = false;
 
-        // ✅ 잡는 동안엔 손에 안정적으로 붙게(물리 충돌로 흔들리지 않게)
+        // 잡는 동안엔 손에 안정적으로 붙게
         rb.velocity = Vector3.zero;
         rb.angularVelocity = Vector3.zero;
-        rb.isKinematic = true;
         rb.useGravity = false;
+        rb.isKinematic = true;
 
-        // ✅ 손 콜라이더와 충돌 무시(있으면 흔들림/밀림 크게 줄어듦)
         if (ignoreHandCollisionsWhileHeld)
             IgnoreHandCollisions();
+
+        if (ignorePlayerCapsuleWhileHeld)
+            IgnorePlayerCapsule(true);
     }
 
     void OnRelease()
     {
-        // ✅ 놓는 순간엔 다시 물리 켜서 떨어지고/던져지게
         RestoreHandCollisions();
+        IgnorePlayerCapsule(false);
 
+        // 놓는 순간엔 다시 물리 켜서 떨어지고/던져지게
         rb.isKinematic = false;
         rb.useGravity = true;
 
@@ -149,8 +171,8 @@ public class K_ReturnToHome_OVR : MonoBehaviour
         // 복귀 중엔 물리 멈추고 이동
         rb.velocity = Vector3.zero;
         rb.angularVelocity = Vector3.zero;
-        rb.isKinematic = true;
         rb.useGravity = false;
+        rb.isKinematic = true;
 
         float t = 0f;
         while (t < returnDuration)
@@ -167,6 +189,10 @@ public class K_ReturnToHome_OVR : MonoBehaviour
         transform.position = targetPos;
         if (resetRotation) transform.rotation = targetRot;
 
+        // 혹시 남아있을 수 있는 충돌 무시 복구
+        RestoreHandCollisions();
+        IgnorePlayerCapsule(false);
+
         SetIdlePhysics();
 
         if (rotator != null) rotator.enabled = true;
@@ -176,11 +202,12 @@ public class K_ReturnToHome_OVR : MonoBehaviour
 
     void SetIdlePhysics()
     {
-        rb.isKinematic = idleKinematic;
-        rb.useGravity = idleUseGravity;
-
+        // ⚠️ 경고 줄이기: kinematic 세팅 전에 속도부터 0으로
         rb.velocity = Vector3.zero;
         rb.angularVelocity = Vector3.zero;
+
+        rb.useGravity = idleUseGravity;
+        rb.isKinematic = idleKinematic;
     }
 
     void IgnoreHandCollisions()
@@ -206,5 +233,20 @@ public class K_ReturnToHome_OVR : MonoBehaviour
                 if (hc && oc) Physics.IgnoreCollision(hc, oc, false);
             }
         handCols = null;
+    }
+
+    void IgnorePlayerCapsule(bool ignore)
+    {
+        if (!ignorePlayerCapsuleWhileHeld) return;
+        if (playerCC == null || objCols == null) return;
+
+        if (playerIgnored == ignore) return;
+
+        foreach (var oc in objCols)
+        {
+            if (oc) Physics.IgnoreCollision(oc, playerCC, ignore);
+        }
+
+        playerIgnored = ignore;
     }
 }
