@@ -59,7 +59,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
   m_Color: {r: 0.19607843, g: 0.19607843, b: 0.19607843, a: 1}
-  m_RaycastTarget: 1
+  m_RaycastTarget: 0
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
   m_OnCullStateChanged:
@@ -216,9 +216,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   targetRoot: {fileID: 7555745751985059705}
   frameImage: {fileID: 42396900724684782}
+  hoverScale: 1.03
   selectedScale: 1.06
   animTime: 0.12
   deselectedColor: {r: 1, g: 1, b: 1, a: 0}
+  hoverColor: {r: 1, g: 0.95, b: 0.6, a: 0.35}
   selectedColor: {r: 1, g: 1, b: 1, a: 1}
   pulse: 1
   pulseAmount: 0.015
