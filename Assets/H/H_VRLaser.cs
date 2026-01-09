@@ -1,56 +1,52 @@
-using UnityEngine;
+ï»¿using UnityEngine;
 
 public class H_VRLaser : MonoBehaviour
 {
     public LineRenderer lineRenderer;
     public float maxDistance = 3.0f;
 
-    [Header("Raycast Mask (¿©±â¼­ Grabbable ·¹ÀÌ¾î Á¦¿Ü)")]
-    public LayerMask rayMask = ~0; // ÀÎ½ºÆåÅÍ¿¡¼­ Á¶Àı
+    [Header("Raycast Mask (ì—¬ê¸°ì„œ Grabbable ë ˆì´ì–´ ì œì™¸)")]
+    public LayerMask rayMask = ~0;
 
-    [Header("Àâ´Â µ¿¾È ·¹ÀÌÀú ²ô±â")]
+    [Header("ì¡ëŠ” ë™ì•ˆ ë ˆì´ì € ë„ê¸°")]
     public bool disableWhileGripping = true;
-    public bool useIndexTrigger = false;   // °ËÁö Æ®¸®°Å·Î ²øÁö, ±×¸³À¸·Î ²øÁö
-    public float triggerThreshold = 0.55f;
-    public bool isRightHand = true;        // ¿À¸¥¼Õ ·¹ÀÌÀú¸é true
+    public OVRGrabber grabber;   // âœ… ì˜¤ë¥¸ì†ì´ë©´ RightHandAnchorì˜ OVRGrabber ë“œë˜ê·¸
+
+    void Awake()
+    {
+        if (lineRenderer == null) lineRenderer = GetComponent<LineRenderer>();
+    }
 
     void Update()
     {
         if (lineRenderer == null) return;
 
-        if (disableWhileGripping && IsGripping())
+        // âœ… ì…ë ¥ê°’ ëŒ€ì‹  "ì‹¤ì œë¡œ ë­”ê°€ ë“¤ê³  ìˆìœ¼ë©´" ë ˆì´ì € ë„ê¸°
+        if (disableWhileGripping && grabber != null && IsHoldingSomething(grabber))
         {
-            if (lineRenderer.enabled) lineRenderer.enabled = false;
+            lineRenderer.enabled = false;
             return;
         }
-        else
-        {
-            if (!lineRenderer.enabled) lineRenderer.enabled = true;
-        }
+
+        lineRenderer.enabled = true;
 
         lineRenderer.SetPosition(0, transform.position);
 
         RaycastHit hit;
         if (Physics.Raycast(transform.position, transform.forward, out hit, maxDistance, rayMask, QueryTriggerInteraction.Ignore))
-        {
             lineRenderer.SetPosition(1, hit.point);
-        }
         else
-        {
             lineRenderer.SetPosition(1, transform.position + transform.forward * maxDistance);
-        }
     }
 
-    bool IsGripping()
+    bool IsHoldingSomething(OVRGrabber g)
     {
-        var c = isRightHand ? OVRInput.Controller.RTouch : OVRInput.Controller.LTouch;
+        // Oculus Integration ë²„ì „ì— ë”°ë¼ grabbedObjectê°€ publicì¼ ìˆ˜ë„ ìˆê³  ì•„ë‹ ìˆ˜ë„ ìˆì–´ì„œ
+        // ê°€ì¥ í”í•œ ì¼€ì´ìŠ¤(í”„ë¡œí¼í‹°) ë¨¼ì € ì‹œë„:
+        var prop = g.GetType().GetProperty("grabbedObject");
+        if (prop != null) return prop.GetValue(g) != null;
 
-        OVRInput.Axis1D axis;
-        if (useIndexTrigger)
-            axis = isRightHand ? OVRInput.Axis1D.SecondaryIndexTrigger : OVRInput.Axis1D.PrimaryIndexTrigger;
-        else
-            axis = isRightHand ? OVRInput.Axis1D.SecondaryHandTrigger : OVRInput.Axis1D.PrimaryHandTrigger;
-
-        return OVRInput.Get(axis, c) >= triggerThreshold;
+        // ë²„ì „ì— ë”°ë¼ private í•„ë“œëª…ì´ ë‹¤ë¥¼ ìˆ˜ ìˆìŒ (ì—¬ê¸°ê¹Œì§€ ì˜¤ë©´ ê·¸ëƒ¥ ì…ë ¥ê¸°ë°˜ìœ¼ë¡œ ì²˜ë¦¬í•˜ëŠ” ê²Œ ë‚«ê¸´ í•¨)
+        return false;
     }
 }
