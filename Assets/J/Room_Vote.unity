@@ -2402,7 +2402,7 @@ MonoBehaviour:
   m_HandleRect: {fileID: 115525410}
   m_Direction: 2
   m_Value: 0
-  m_Size: 0.9999916
+  m_Size: 0.9999915
   m_NumberOfSteps: 0
   m_OnValueChanged:
     m_PersistentCalls:
@@ -3675,7 +3675,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: -109.27487}
+  m_AnchoredPosition: {x: 0, y: -109.27498}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &770855040
@@ -7995,6 +7995,11 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1547189137}
   m_CullTransparentMesh: 1
+--- !u!143 &1554927762 stripped
+CharacterController:
+  m_CorrespondingSourceObject: {fileID: 14300000, guid: ce816f2e6abb0504092c23ed9b970dfd, type: 3}
+  m_PrefabInstance: {fileID: 2139788768}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1566290791
 GameObject:
   m_ObjectHideFlags: 0
@@ -8302,12 +8307,17 @@ MonoBehaviour:
   floorLayers:
     serializedVersion: 2
     m_Bits: 0
-  returnDelayAfterHit: 0.1
-  returnDuration: 0.6
+  returnWhenStopped: 1
+  linearSpeedThreshold: 0.15
+  angularSpeedThreshold: 25
+  stoppedTimeRequired: 0.35
+  maxWaitAfterRelease: 6
+  returnDelayAfterHit: 0.5
+  returnDuration: 0.2
   disableRotationWhileHeld: 1
   ignoreHandCollisionsWhileHeld: 1
   ignorePlayerCapsuleWhileHeld: 1
-  playerCC: {fileID: 0}
+  playerCC: {fileID: 1554927762}
 --- !u!114 &1586169948
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -8389,7 +8399,7 @@ MonoBehaviour:
   rightGrabber: {fileID: 1828005348}
   leftGripTransform: {fileID: 1604701806}
   rightGripTransform: {fileID: 106426203}
-  secondaryGrabDistance: 0.15
+  secondaryGrabDistance: 0.3
   useIndexTrigger: 0
   pressThreshold: 0.55
 --- !u!1 &1586331183
