@@ -1,4 +1,5 @@
 ﻿using System.Collections;
+using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
@@ -19,11 +20,23 @@ public class J_VoteBoardBootstrap : MonoBehaviour
             .Where(e => !string.IsNullOrEmpty(e.optionId))
             .ToList();
 
-        var dup = exhibits.GroupBy(e => e.optionId).Where(g => g.Count() > 1).Select(g => g.Key).ToList();
+        var dup = exhibits.GroupBy(e => e.optionId)
+                          .Where(g => g.Count() > 1)
+                          .Select(g => g.Key)
+                          .ToList();
+
         if (dup.Count > 0)
             Debug.LogError("중복 optionId 발견: " + string.Join(", ", dup));
 
         exhibits = exhibits.OrderBy(e => e.optionId).ToList();
+
+        // ✅ optionId -> iconSprite 맵 생성 (BuildAll 전에 UI에 넣어야 함)
+        var iconMap = exhibits
+            .GroupBy(e => e.optionId)
+            .ToDictionary(g => g.Key, g => g.First().iconSprite);
+
+        if (ui != null)
+            ui.SetIconMap(iconMap);
 
         var poll = new J_Poll { question = question };
 
