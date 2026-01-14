@@ -85,6 +85,9 @@ public partial class J_PollUI
 
             spawnedOptionBtns.Add(btn.gameObject);
         }
+
+        // ✅ 후보를 다시 만들고 나면 레이아웃 계산 뒤 맨 위로 보내기
+        ForceVoteScrollTop();
     }
 
     void ClearSelection()

@@ -70,6 +70,16 @@ public partial class J_PollUI : MonoBehaviour
     [Tooltip("그립 유지 후 누를 확인 버튼(기본: 오른손 스틱 클릭)")]
     public OVRInput.Button adminConfirmButton = OVRInput.Button.SecondaryThumbstick;
 
+    [Header("Vote Scroll (Scroll View)")]
+    [Tooltip("VotePanel의 Scroll View(ScrollRect)를 연결하세요. 비워도 자동 탐색(옵션Root 기준) 시도합니다.")]
+    public ScrollRect voteScrollRect;
+
+    [Tooltip("투표 패널 켤 때/옵션 빌드 후 스크롤을 맨 위로 강제")]
+    public bool forceVoteScrollTop = true;
+
+    [Tooltip("레이아웃 계산 때문에 튀는 걸 잡기 위해 몇 프레임 보정할지")]
+    public int voteScrollFixFrames = 2;
+
     bool adminRevealActive;
     float adminRevealUntil;
     float adminHoldTimer;
@@ -85,6 +95,8 @@ public partial class J_PollUI : MonoBehaviour
     bool isSending;
     bool isFetchingResults;
     Coroutine autoRefreshCo;
+
+    Coroutine voteScrollCo;
 
     public void BuildAll()
     {
@@ -220,11 +232,70 @@ public partial class J_PollUI : MonoBehaviour
         if (inputBlocker != null) inputBlocker.SetActive(on);
     }
 
+    // -----------------------
+    // ✅ Vote Scroll Fix
+    // -----------------------
+    void EnsureVoteScrollRect()
+    {
+        if (voteScrollRect != null) return;
+
+        // optionsRoot 기준으로 부모에서 ScrollRect 자동 탐색
+        if (optionsRoot != null)
+            voteScrollRect = optionsRoot.GetComponentInParent<ScrollRect>(true);
+    }
+
+    void ForceVoteScrollTop()
+    {
+        if (!forceVoteScrollTop) return;
+
+        // votePanel이 없거나 아직 꺼져있으면 굳이 안 돌림
+        if (votePanel != null && !votePanel.activeInHierarchy) return;
+
+        EnsureVoteScrollRect();
+        if (voteScrollRect == null) return;
+
+        if (voteScrollCo != null) StopCoroutine(voteScrollCo);
+        voteScrollCo = StartCoroutine(CoForceVoteScrollTop());
+    }
+
+    IEnumerator CoForceVoteScrollTop()
+    {
+        EnsureVoteScrollRect();
+        if (voteScrollRect == null)
+        {
+            voteScrollCo = null;
+            yield break;
+        }
+
+        int frames = Mathf.Max(1, voteScrollFixFrames);
+
+        // 레이아웃/ContentSizeFitter 계산이 다음 프레임에 끝나는 경우가 많아서
+        // 몇 프레임 반복 보정
+        for (int i = 0; i < frames; i++)
+        {
+            Canvas.ForceUpdateCanvases();
+            yield return null;
+
+            Canvas.ForceUpdateCanvases();
+
+            if (voteScrollRect.content != null)
+                LayoutRebuilder.ForceRebuildLayoutImmediate(voteScrollRect.content);
+
+            voteScrollRect.velocity = Vector2.zero;
+            voteScrollRect.verticalNormalizedPosition = 1f; // ✅ Top
+        }
+
+        voteScrollCo = null;
+    }
+
     public void ShowVotePanel()
     {
         if (votePanel != null) votePanel.SetActive(true);
         if (resultPanel != null) resultPanel.SetActive(false);
         StopAutoRefresh();
+
+        // ✅ 투표 패널 켤 때 스크롤을 맨 위로
+        ForceVoteScrollTop();
     }
 
     public void ShowResultPanel()
