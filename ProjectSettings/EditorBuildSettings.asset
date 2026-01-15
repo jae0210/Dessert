@@ -5,12 +5,15 @@ EditorBuildSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 2
   m_Scenes:
-  - enabled: 1
+  - enabled: 0
     path: Assets/K/K_Scenes/K_Title.unity
     guid: 5bebfb0a30c22b045abecb9591ba2dea
-  - enabled: 1
+  - enabled: 0
     path: Assets/J/Room_Vote.unity
     guid: 233f35549e0d1a0418e154cf3e4d8bdd
+  - enabled: 1
+    path: Assets/J/Room_Photon.unity
+    guid: 5d168caf22b3dd844a9ed66d9c5d277a
   m_configObjects:
     Unity.XR.Oculus.Settings: {fileID: 11400000, guid: 870e1a49ad21392468c5affd75c26eda, type: 2}
     com.unity.xr.arfoundation.simulation_settings: {fileID: 11400000, guid: 741de7d447bcbcb4daaa26c6049dde2a, type: 2}

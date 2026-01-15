@@ -13,8 +13,9 @@ GameObject:
   - component: {fileID: 2769110996419994897}
   - component: {fileID: 8744397270965123990}
   - component: {fileID: 4485081012390419153}
-  - component: {fileID: 6856483143535543982}
-  m_Layer: 8
+  - component: {fileID: 6466686038983910882}
+  - component: {fileID: 5726591967435821504}
+  m_Layer: 9
   m_Name: J_NetCapsule
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -128,11 +129,27 @@ MonoBehaviour:
   OwnershipTransfer: 0
   observableSearch: 2
   ObservedComponents:
-  - {fileID: 6856483143535543982}
+  - {fileID: 6466686038983910882}
+  - {fileID: 5726591967435821504}
   sceneViewId: 0
   InstantiationId: 0
   isRuntimeInstantiated: 0
---- !u!114 &6856483143535543982
+--- !u!114 &6466686038983910882
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2331243695098103043}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fb78fa93a2fae64479f8f495201a08d2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  followTarget: {fileID: 0}
+  hideWhenMine:
+  - {fileID: 2769110996419994897}
+--- !u!114 &5726591967435821504
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -145,7 +162,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_PositionModel:
-    SynchronizeEnabled: 1
+    SynchronizeEnabled: 0
     TeleportEnabled: 1
     TeleportIfDistanceGreaterThan: 3
     InterpolateOption: 2
@@ -156,7 +173,7 @@ MonoBehaviour:
     ExtrapolateIncludingRoundTripTime: 1
     ExtrapolateNumberOfStoredPositions: 1
   m_RotationModel:
-    SynchronizeEnabled: 1
+    SynchronizeEnabled: 0
     InterpolateOption: 1
     InterpolateRotateTowardsSpeed: 180
     InterpolateLerpSpeed: 5
