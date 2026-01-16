@@ -4473,7 +4473,7 @@ MonoBehaviour:
   m_HandleRect: {fileID: 115525410}
   m_Direction: 2
   m_Value: 0
-  m_Size: 0.9992369
+  m_Size: 1
   m_NumberOfSteps: 0
   m_OnValueChanged:
     m_PersistentCalls:
@@ -6967,9 +6967,6 @@ PrefabInstance:
       addedObject: {fileID: 768224564}
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: fedef1035bbd4594193ba197708c3bd0, type: 3}
       insertIndex: -1
-      addedObject: {fileID: 768224563}
-    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: fedef1035bbd4594193ba197708c3bd0, type: 3}
-      insertIndex: -1
       addedObject: {fileID: 768224562}
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: fedef1035bbd4594193ba197708c3bd0, type: 3}
       insertIndex: -1
@@ -7116,21 +7113,6 @@ MonoBehaviour:
   ignoreHandCollisionsWhileHeld: 1
   ignorePlayerCapsuleWhileHeld: 1
   playerCC: {fileID: 1554927762}
---- !u!114 &768224563
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 768224557}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c6da1d660e3e49945855e83986521d87, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  optionId: yakgwa
-  displayName: "\uC57D\uACFC"
-  iconSprite: {fileID: 21300000, guid: 294e8b122eb0dbd48b21c36d6facbb57, type: 3}
 --- !u!114 &768224564
 MonoBehaviour:
   m_ObjectHideFlags: 0
