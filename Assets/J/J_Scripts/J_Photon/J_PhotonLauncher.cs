@@ -5,7 +5,7 @@ using UnityEngine;
 public class J_PhotonLauncher : MonoBehaviourPunCallbacks
 {
     [Header("같은 값이면 같은 방으로 모임")]
-    [SerializeField] private string roomName = "J_TestRoom";
+    [SerializeField] private string roomName = "J_NetCapsule";
     [SerializeField] private byte maxPlayers = 10;
 
     void Start()
