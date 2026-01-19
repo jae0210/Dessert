@@ -120,6 +120,7 @@ GameObject:
   - component: {fileID: 5726591967435821504}
   - component: {fileID: 2640859558436762821}
   - component: {fileID: 2922838948064629621}
+  - component: {fileID: 7073397994022912091}
   m_Layer: 9
   m_Name: J_NetCapsule
   m_TagString: Untagged
@@ -334,6 +335,22 @@ MonoBehaviour:
   deadZone01: 0.35
   holdToOpen: 1
   openButton: 1
+--- !u!114 &7073397994022912091
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2331243695098103043}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8f4d5bd281b826d438f32a1258ce3d8f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  hatObjectName: Hat
+  hatRenderer: {fileID: 8893232750151764871}
+  rerollWithKey: 0
+  rerollKey: 308
 --- !u!1 &2527729277558790402
 GameObject:
   m_ObjectHideFlags: 0
