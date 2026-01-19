@@ -1,118 +1,115 @@
-﻿using Photon.Pun;
-using UnityEngine;
+﻿using UnityEngine;
 
-public class J_EmoteInput : MonoBehaviourPun
+public class J_EmoteInput : MonoBehaviour
 {
     [Header("Refs")]
     [SerializeField] private J_NetEmote netEmote;
-    [SerializeField] private GameObject menuRoot;                // MenuRoot (켜고/끄는 용도)
-    [SerializeField] private J_EmoteRadialMenuUI radialMenuUI;    // RadialMenu 오브젝트에 붙은 컴포넌트
-    [SerializeField] private Sprite[] icons;                      // 이모티콘 아이콘들(= netEmote emotes와 같은 순서 권장)
+    [SerializeField] private GameObject menuRoot;               // MenuRoot (Ring/ButtonsRoot/RadialMenu 포함)
+    [SerializeField] private J_EmoteRadialMenuUI radialMenuUI;  // RadialMenu 오브젝트
+    [SerializeField] private Sprite[] icons;
+
+    [Header("Ray Select")]
+    [SerializeField] private Transform rayOrigin; // RightHandAnchor 등
+    [SerializeField] private float maxRayDistance = 3f;
+    [SerializeField, Range(0f, 0.9f)] private float deadZone01 = 0.35f;
 
     [Header("Input")]
-    [SerializeField] private bool holdToOpen = true;              // A 누르고 있는 동안만 열기
-    [SerializeField] private float deadZone = 0.35f;              // 스틱 데드존
+    [SerializeField] private bool holdToOpen = true; // 지금 방식 그대로
+    [SerializeField] private OVRInput.Button openButton = OVRInput.Button.One; // A
 
-    private bool isOpen;
-    private int currentIndex = -1;
+    private bool menuOpen;
+    private int pendingIndex = -1;
+    private bool built;
+
+    void Awake()
+    {
+        if (menuRoot) menuRoot.SetActive(false);
+    }
 
     void Start()
     {
-        if (!photonView.IsMine)
-        {
-            enabled = false;
-            return;
-        }
-
-        if (menuRoot) menuRoot.SetActive(false);
-
-        // 버튼 클릭도 되게 Build
-        if (radialMenuUI && icons != null && icons.Length > 0)
-        {
-            radialMenuUI.Build(icons, idx =>
-            {
-                netEmote.RequestEmote(idx);
-                Close();
-            });
-        }
+        // 미리 한번 빌드해도 되고, 열릴 때 빌드해도 됨
+        TryBuildOnce();
     }
 
     void Update()
     {
-        if (!photonView.IsMine) return;
-        if (netEmote == null || menuRoot == null) return;
+        if (!netEmote || !menuRoot || !radialMenuUI) return;
 
-        bool aDown =
-            OVRInput.GetDown(OVRInput.Button.One, OVRInput.Controller.RTouch) ||
-            OVRInput.GetDown(OVRInput.RawButton.A, OVRInput.Controller.RTouch);
-
-        bool aUp =
-            OVRInput.GetUp(OVRInput.Button.One, OVRInput.Controller.RTouch) ||
-            OVRInput.GetUp(OVRInput.RawButton.A, OVRInput.Controller.RTouch);
+        bool down = OVRInput.GetDown(openButton);
+        bool held = OVRInput.Get(openButton);
+        bool up = OVRInput.GetUp(openButton);
 
         if (holdToOpen)
         {
-            if (aDown) Open();
-            if (isOpen) UpdateStickSelection();
-            if (aUp) ConfirmAndClose();
+            if (down) OpenMenu();
+            if (menuOpen && held) UpdateSelection();
+            if (menuOpen && up) ConfirmAndClose();
         }
         else
         {
-            if (aDown)
+            // 토글 모드(필요하면)
+            if (down)
             {
-                if (isOpen) Close();
-                else Open();
+                if (!menuOpen) OpenMenu();
+                else CloseMenu();
             }
-            if (isOpen) UpdateStickSelection();
+            if (menuOpen) UpdateSelection();
         }
     }
 
-    void Open()
+    void TryBuildOnce()
     {
-        isOpen = true;
-        currentIndex = -1;
-        menuRoot.SetActive(true);
+        if (built) return;
+        if (icons == null || icons.Length == 0) return;
+
+        radialMenuUI.Build(icons, null); // 클릭은 안 씀(우린 A-Release로 확정)
+        built = true;
     }
 
-    void Close()
+    void OpenMenu()
     {
-        isOpen = false;
-        currentIndex = -1;
+        TryBuildOnce();
+
+        menuRoot.SetActive(true);
+        menuOpen = true;
+        pendingIndex = -1;
+        radialMenuUI.ClearHighlight();
+    }
+
+    void CloseMenu()
+    {
         menuRoot.SetActive(false);
+        menuOpen = false;
+        pendingIndex = -1;
+        radialMenuUI.ClearHighlight();
+    }
+
+    void UpdateSelection()
+    {
+        if (!rayOrigin) return;
+
+        Ray ray = new Ray(rayOrigin.position, rayOrigin.forward);
+
+        int idx = radialMenuUI.PickIndexFromWorldRay(ray, maxRayDistance, deadZone01);
+        if (idx >= 0)
+        {
+            pendingIndex = idx;
+            radialMenuUI.SetHighlight(idx);
+        }
+        else
+        {
+            pendingIndex = -1;
+            radialMenuUI.ClearHighlight();
+        }
     }
 
     void ConfirmAndClose()
     {
-        if (currentIndex >= 0)
-            netEmote.RequestEmote(currentIndex);
+        // A를 떼는 순간 확정
+        if (pendingIndex >= 0)
+            netEmote.RequestEmote(pendingIndex);
 
-        Close();
-    }
-
-    void UpdateStickSelection()
-    {
-        // 오른손 스틱(오큘러스는 보통 SecondaryThumbstick이 오른손)
-        Vector2 stick = OVRInput.Get(OVRInput.Axis2D.SecondaryThumbstick, OVRInput.Controller.RTouch);
-
-        if (stick.magnitude < deadZone)
-        {
-            currentIndex = -1;
-            return;
-        }
-
-        int count = (icons != null) ? icons.Length : 0;
-        if (count == 0) return;
-
-        // 위쪽을 0번으로
-        float ang = Mathf.Atan2(stick.y, stick.x) * Mathf.Rad2Deg;
-        ang = (ang + 450f) % 360f; // -90 보정(위가 시작점)
-
-        float step = 360f / count;
-        int idx = Mathf.FloorToInt(ang / step);
-        currentIndex = Mathf.Clamp(idx, 0, count - 1);
-
-        // ★ 하이라이트는 “일단 간단히” 스케일로 처리
-        // (radialMenuUI가 만든 버튼들이 root 아래에 있으니 Root 아래 자식들 스케일 조정)
-        // 여기서 root 접근이 필요하면, radialMenuUI에 Highlight 함수 추가하는 게 깔끔함.
+        CloseMenu();
     }
 }
