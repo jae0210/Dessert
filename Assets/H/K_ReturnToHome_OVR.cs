@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using UnityEngine;
+using Photon.Pun; // ✅ 포톤 네임스페이스 추가
 
 [RequireComponent(typeof(Rigidbody))]
 [RequireComponent(typeof(OVRGrabbable))]
@@ -41,8 +42,11 @@ public class K_ReturnToHome_OVR : MonoBehaviour
     Rigidbody rb;
     K_Rotator rotator;
 
-    // ✅ 추가된 변수: 음식 물리 제어용
+    // ✅ 음식 물리 제어용 변수
     K_FoodPhysicsController foodPhysics;
+
+    // ✅ 포톤 뷰 변수 추가
+    PhotonView pv;
 
     Vector3 homePos;
     Quaternion homeRot;
@@ -66,9 +70,10 @@ public class K_ReturnToHome_OVR : MonoBehaviour
         grabbable = GetComponent<OVRGrabbable>();
         rb = GetComponent<Rigidbody>();
         rotator = GetComponent<K_Rotator>();
-
-        // ✅ 추가된 로직: 같은 오브젝트에 있는 FoodPhysicsController 가져오기
         foodPhysics = GetComponent<K_FoodPhysicsController>();
+
+        // ✅ 포톤 컴포넌트 가져오기
+        pv = GetComponent<PhotonView>();
 
         objCols = GetComponentsInChildren<Collider>(true);
 
@@ -108,6 +113,10 @@ public class K_ReturnToHome_OVR : MonoBehaviour
 
     void Update()
     {
+        // ✅ [중요] 포톤 뷰가 있고, 내가 주인이 아니라면 로직 실행 중단
+        // 위치 동기화는 PhotonTransformView가 알아서 하므로, 로직 계산은 주인만 함
+        if (pv != null && !pv.IsMine) return;
+
         bool grabbed = grabbable.isGrabbed;
 
         if (grabbed)
@@ -148,7 +157,7 @@ public class K_ReturnToHome_OVR : MonoBehaviour
         if (disableRotationWhileHeld && rotator != null)
             rotator.enabled = false;
 
-        // ✅ 잡았을 때 음식 물리는 켜기 (손 안에서 출렁거리도록)
+        // 잡았을 때 음식 물리는 켜기
         if (foodPhysics != null) foodPhysics.enabled = true;
 
         rb.velocity = Vector3.zero;
@@ -213,6 +222,9 @@ public class K_ReturnToHome_OVR : MonoBehaviour
 
     void OnCollisionEnter(Collision collision)
     {
+        // ✅ 주인이 아니면 충돌 처리도 하지 않음
+        if (pv != null && !pv.IsMine) return;
+
         if (returnWhenStopped) return;
 
         if (!waitingForFloor) return;
@@ -228,6 +240,9 @@ public class K_ReturnToHome_OVR : MonoBehaviour
 
     void StartReturn()
     {
+        // ✅ 혹시 모를 안전장치: 주인이 아니면 리턴 시작 안 함
+        if (pv != null && !pv.IsMine) return;
+
         if (returning) return;
 
         returning = true;
@@ -250,7 +265,7 @@ public class K_ReturnToHome_OVR : MonoBehaviour
         if (returnDelayAfterHit > 0f)
             yield return new WaitForSeconds(returnDelayAfterHit);
 
-        // ✅ 추가된 로직: 귀환 시작 시 물리 끄기 (빠른 이동 시 찌그러짐 방지)
+        // 귀환 시작 시 물리 끄기
         if (foodPhysics != null) foodPhysics.enabled = false;
 
         Vector3 fromPos = transform.position;
@@ -287,7 +302,7 @@ public class K_ReturnToHome_OVR : MonoBehaviour
 
         if (rotator != null) rotator.enabled = true;
 
-        // ✅ 추가된 로직: 귀환 완료 후 물리 다시 켜기
+        // 귀환 완료 후 물리 다시 켜기
         if (foodPhysics != null)
         {
             foodPhysics.enabled = true;
