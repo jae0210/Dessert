@@ -349,8 +349,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   hatObjectName: Hat
   hatRenderer: {fileID: 8893232750151764871}
-  rerollWithKey: 0
-  rerollKey: 308
+  debugLog: 1
 --- !u!1 &2527729277558790402
 GameObject:
   m_ObjectHideFlags: 0
