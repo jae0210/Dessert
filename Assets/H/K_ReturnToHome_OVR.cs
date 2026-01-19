@@ -20,13 +20,13 @@ public class K_ReturnToHome_OVR : MonoBehaviour
 
     [Header("Return 조건: 멈춤(추천)")]
     public bool returnWhenStopped = true;
-    public float linearSpeedThreshold = 0.15f;     // m/s (씬 스케일에 맞게 조절)
-    public float angularSpeedThreshold = 25f;      // deg/s
-    public float stoppedTimeRequired = 0.35f;      // 이 시간 동안 계속 느리면 귀환
-    public float maxWaitAfterRelease = 6f;         // 너무 오래 굴러가면 강제 귀환
+    public float linearSpeedThreshold = 0.15f;
+    public float angularSpeedThreshold = 25f;
+    public float stoppedTimeRequired = 0.35f;
+    public float maxWaitAfterRelease = 6f;
 
     [Header("Return Settings")]
-    public float returnDelayAfterHit = 0.1f;       // 멈춘 뒤/바닥 닿은 뒤 기다렸다 귀환
+    public float returnDelayAfterHit = 0.1f;
     public float returnDuration = 0.6f;
     public bool disableRotationWhileHeld = true;
 
@@ -35,11 +35,14 @@ public class K_ReturnToHome_OVR : MonoBehaviour
 
     [Header("Held 중 플레이어 캡슐(CharacterController)과 충돌 무시(밀림 방지)")]
     public bool ignorePlayerCapsuleWhileHeld = true;
-    public CharacterController playerCC; // 비워두면 자동 탐색(권장). 안 되면 수동 드래그.
+    public CharacterController playerCC;
 
     OVRGrabbable grabbable;
     Rigidbody rb;
     K_Rotator rotator;
+
+    // ✅ 추가된 변수: 음식 물리 제어용
+    K_FoodPhysicsController foodPhysics;
 
     Vector3 homePos;
     Quaternion homeRot;
@@ -49,16 +52,13 @@ public class K_ReturnToHome_OVR : MonoBehaviour
     bool returning;
     Coroutine returnCo;
 
-    // 멈춤 감지 타이머
     float stoppedTimer;
     float releaseTimer;
 
-    // 충돌 무시용 캐시
     Collider[] objCols;
     Collider[] handCols;
     bool playerIgnored;
 
-    // 현재 잡고 있는 손(Grabber) 추적(Offhand Grab 전환 처리)
     OVRGrabber currentGrabber;
 
     void Awake()
@@ -66,6 +66,9 @@ public class K_ReturnToHome_OVR : MonoBehaviour
         grabbable = GetComponent<OVRGrabbable>();
         rb = GetComponent<Rigidbody>();
         rotator = GetComponent<K_Rotator>();
+
+        // ✅ 추가된 로직: 같은 오브젝트에 있는 FoodPhysicsController 가져오기
+        foodPhysics = GetComponent<K_FoodPhysicsController>();
 
         objCols = GetComponentsInChildren<Collider>(true);
 
@@ -117,7 +120,6 @@ public class K_ReturnToHome_OVR : MonoBehaviour
             }
             else
             {
-                // 잡고 있는 상태에서 손이 바뀌는(Offhand Grab) 경우 처리
                 if (gb != null && gb != currentGrabber)
                     OnGrabberChanged(gb);
             }
@@ -126,7 +128,6 @@ public class K_ReturnToHome_OVR : MonoBehaviour
         {
             if (wasGrabbed) OnRelease();
 
-            // ✅ 놓인 상태에서 "멈추면 귀환"
             if (returnWhenStopped && !returning)
                 CheckStopAndReturn();
         }
@@ -147,7 +148,9 @@ public class K_ReturnToHome_OVR : MonoBehaviour
         if (disableRotationWhileHeld && rotator != null)
             rotator.enabled = false;
 
-        // 잡는 동안 안정(손에 붙는 느낌)
+        // ✅ 잡았을 때 음식 물리는 켜기 (손 안에서 출렁거리도록)
+        if (foodPhysics != null) foodPhysics.enabled = true;
+
         rb.velocity = Vector3.zero;
         rb.angularVelocity = Vector3.zero;
         rb.useGravity = false;
@@ -164,16 +167,12 @@ public class K_ReturnToHome_OVR : MonoBehaviour
 
     void OnGrabberChanged(OVRGrabber newGrabber)
     {
-        // 이전 손 ignore 복구
         RestoreHandCollisions();
-
         currentGrabber = newGrabber;
 
-        // 새 손 ignore 적용
         if (ignoreHandCollisionsWhileHeld && currentGrabber != null)
             IgnoreHandCollisions(currentGrabber);
 
-        // 플레이어 캡슐 ignore는 잡는 동안 계속 유지
         if (ignorePlayerCapsuleWhileHeld)
             IgnorePlayerCapsule(true);
     }
@@ -184,20 +183,16 @@ public class K_ReturnToHome_OVR : MonoBehaviour
         IgnorePlayerCapsule(false);
         currentGrabber = null;
 
-        // 놓는 순간엔 다시 물리 켜서 떨어지고/던져지게
         rb.isKinematic = false;
         rb.useGravity = true;
 
-        // ✅ 바닥 기반 귀환 vs 멈춤 기반 귀환 선택
         waitingForFloor = !returnWhenStopped;
-
         stoppedTimer = 0f;
         releaseTimer = 0f;
     }
 
     void CheckStopAndReturn()
     {
-        // 전시상태(kinematic)면 체크할 필요 없음
         if (rb.isKinematic) return;
 
         releaseTimer += Time.deltaTime;
@@ -210,7 +205,6 @@ public class K_ReturnToHome_OVR : MonoBehaviour
         if (slow) stoppedTimer += Time.deltaTime;
         else stoppedTimer = 0f;
 
-        // 일정 시간 이상 느리게 유지되거나 너무 오래 기다리면 귀환
         if (stoppedTimer >= stoppedTimeRequired || releaseTimer >= maxWaitAfterRelease)
         {
             StartReturn();
@@ -219,7 +213,6 @@ public class K_ReturnToHome_OVR : MonoBehaviour
 
     void OnCollisionEnter(Collision collision)
     {
-        // 멈춤 귀환을 쓰면 바닥 귀환은 보통 필요 없음(옵션 유지)
         if (returnWhenStopped) return;
 
         if (!waitingForFloor) return;
@@ -254,9 +247,11 @@ public class K_ReturnToHome_OVR : MonoBehaviour
 
     IEnumerator ReturnRoutine()
     {
-        // 멈춘 뒤/바닥 닿은 뒤 약간 텀 주기
         if (returnDelayAfterHit > 0f)
             yield return new WaitForSeconds(returnDelayAfterHit);
+
+        // ✅ 추가된 로직: 귀환 시작 시 물리 끄기 (빠른 이동 시 찌그러짐 방지)
+        if (foodPhysics != null) foodPhysics.enabled = false;
 
         Vector3 fromPos = transform.position;
         Quaternion fromRot = transform.rotation;
@@ -264,7 +259,6 @@ public class K_ReturnToHome_OVR : MonoBehaviour
         Vector3 targetPos = (home != null) ? home.position : homePos;
         Quaternion targetRot = (home != null) ? home.rotation : homeRot;
 
-        // 복귀 중엔 물리 멈추고 이동
         rb.velocity = Vector3.zero;
         rb.angularVelocity = Vector3.zero;
         rb.useGravity = false;
@@ -285,7 +279,6 @@ public class K_ReturnToHome_OVR : MonoBehaviour
         transform.position = targetPos;
         if (resetRotation) transform.rotation = targetRot;
 
-        // 안전 복구
         RestoreHandCollisions();
         IgnorePlayerCapsule(false);
         currentGrabber = null;
@@ -294,15 +287,19 @@ public class K_ReturnToHome_OVR : MonoBehaviour
 
         if (rotator != null) rotator.enabled = true;
 
+        // ✅ 추가된 로직: 귀환 완료 후 물리 다시 켜기
+        if (foodPhysics != null)
+        {
+            foodPhysics.enabled = true;
+        }
+
         returning = false;
     }
 
     void SetIdlePhysics()
     {
-        // 경고 줄이기: 속도 0 -> kinematic 세팅 순서
         rb.velocity = Vector3.zero;
         rb.angularVelocity = Vector3.zero;
-
         rb.useGravity = idleUseGravity;
         rb.isKinematic = idleKinematic;
     }
