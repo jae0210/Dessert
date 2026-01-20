@@ -353,7 +353,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   BodyObjectName: Body
-  BodyRenderer: {fileID: 0}
+  BodyRenderer: {fileID: 7706477040880346112}
   debugLog: 1
 --- !u!1 &2527729277558790402
 GameObject:
