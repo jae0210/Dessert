@@ -352,10 +352,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8f4d5bd281b826d438f32a1258ce3d8f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  bodyObjectName: Body
-  bodyRenderer: {fileID: 0}
-  targetMaterialNameContains: bobusang_body
-  fallbackMaterialIndex: 1
+  BodyObjectName: Body
+  BodyRenderer: {fileID: 0}
   debugLog: 1
 --- !u!1 &2527729277558790402
 GameObject:
