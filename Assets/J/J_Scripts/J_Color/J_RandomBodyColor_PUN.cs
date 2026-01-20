@@ -6,35 +6,27 @@ using Photon.Realtime;
 public class J_RandomBodyColor_PUN : MonoBehaviourPun
 {
     [Header("Body 찾기")]
-    [SerializeField] private string bodyObjectName = "Body";
-    [SerializeField] private Renderer bodyRenderer;
-
-    [Header("어느 머티리얼에 색을 입힐까?")]
-    [Tooltip("bobusang_body처럼 머티리얼 이름(또는 포함 문자열)로 찾음")]
-    [SerializeField] private string targetMaterialNameContains = "bobusang_body";
-
-    [Tooltip("못 찾으면 이 인덱스를 사용. (네 스샷 기준: 1)")]
-    [SerializeField] private int fallbackMaterialIndex = 1;
+    [SerializeField] private string BodyObjectName = "Body";
+    [SerializeField] private Renderer BodyRenderer;
 
     [Header("Debug Log")]
     [SerializeField] private bool debugLog = true;
 
-    private int targetMatIndex = -1;
-    private MaterialPropertyBlock mpb;
-
     private IEnumerator Start()
     {
-        mpb = new MaterialPropertyBlock();
         yield return null;
 
         CacheBodyRenderer();
-        CacheTargetMaterialIndex();
 
         if (debugLog)
         {
             Debug.Log($"[BodyColor] Start | InRoom={PhotonNetwork.InRoom} | IsMine={photonView.IsMine} | ViewID={photonView.ViewID}", this);
-            if (bodyRenderer != null)
-                Debug.Log($"[BodyColor] Renderer={bodyRenderer.name} | materials={bodyRenderer.sharedMaterials.Length} | targetMatIndex={targetMatIndex}", this);
+
+            if (BodyRenderer != null && BodyRenderer.sharedMaterial != null)
+            {
+                bool hasColor = BodyRenderer.sharedMaterial.HasProperty("_Color"); // ✅ 백슬래시 없음
+                Debug.Log($"[BodyColor] Mat={BodyRenderer.sharedMaterial.name} | Shader={BodyRenderer.sharedMaterial.shader.name} | Has _Color={hasColor}", this);
+            }
         }
 
         // 내 캐릭터만 랜덤 생성 -> RPC 전파
@@ -47,78 +39,44 @@ public class J_RandomBodyColor_PUN : MonoBehaviourPun
 
     private void CacheBodyRenderer()
     {
-        if (bodyRenderer != null) return;
+        if (BodyRenderer != null) return;
 
-        Transform t = transform.Find(bodyObjectName);
+        Transform t = transform.Find(BodyObjectName);
+
         if (t == null)
         {
             foreach (Transform child in GetComponentsInChildren<Transform>(true))
             {
-                if (child.name == bodyObjectName) { t = child; break; }
+                if (child.name == BodyObjectName) { t = child; break; }
             }
         }
 
         if (t == null)
         {
-            Debug.LogWarning($"[BodyColor] '{bodyObjectName}' Transform NOT FOUND", this);
+            Debug.LogWarning($"[BodyColor] '{BodyObjectName}' Transform NOT FOUND", this);
             return;
         }
 
-        bodyRenderer = t.GetComponentInChildren<Renderer>(true);
-    }
-
-    private void CacheTargetMaterialIndex()
-    {
-        targetMatIndex = -1;
-        if (bodyRenderer == null) return;
-
-        var mats = bodyRenderer.sharedMaterials;
-        if (mats == null || mats.Length == 0) return;
-
-        // 1) 이름으로 찾기
-        for (int i = 0; i < mats.Length; i++)
-        {
-            var m = mats[i];
-            if (m == null) continue;
-
-            // Unity는 머티리얼 이름 뒤에 " (Instance)"가 붙을 수 있어서 포함 검사 추천
-            if (!string.IsNullOrEmpty(targetMaterialNameContains) && m.name.Contains(targetMaterialNameContains))
-            {
-                targetMatIndex = i;
-                break;
-            }
-        }
-
-        // 2) 못 찾으면 fallback 인덱스
-        if (targetMatIndex < 0)
-        {
-            if (fallbackMaterialIndex >= 0 && fallbackMaterialIndex < mats.Length)
-                targetMatIndex = fallbackMaterialIndex;
-            else
-                targetMatIndex = 0; // 최후 fallback
-        }
+        BodyRenderer = t.GetComponentInChildren<Renderer>(true);
     }
 
     [PunRPC]
     private void RPC_SetBodyColor(float r, float g, float b, float a, PhotonMessageInfo info)
     {
-        if (bodyRenderer == null) CacheBodyRenderer();
-        if (bodyRenderer == null) return;
-
-        if (targetMatIndex < 0) CacheTargetMaterialIndex();
+        if (BodyRenderer == null) CacheBodyRenderer();
+        if (BodyRenderer == null) return;
 
         Color c = new Color(r, g, b, a);
 
-        // ✅ 특정 머티리얼 슬롯(= bobusang_body)만 색 적용
-        bodyRenderer.GetPropertyBlock(mpb, targetMatIndex);
-
-        // Standard: _Color / URP Lit: _BaseColor 둘 다 넣어두면 안전
-        mpb.SetColor("_Color", c);
-        mpb.SetColor("_BaseColor", c);
-
-        bodyRenderer.SetPropertyBlock(mpb, targetMatIndex);
+        // ✅ 인스펙터 Albedo 옆 색상칸 = _Color 변경(플레이어별 인스턴스)
+        var mats = BodyRenderer.materials;
+        for (int i = 0; i < mats.Length; i++)
+        {
+            if (mats[i] == null) continue;
+            if (mats[i].HasProperty("_Color")) mats[i].SetColor("_Color", c);
+        }
 
         if (debugLog)
-            Debug.Log($"[BodyColor] Applied color | fromActor={info.Sender?.ActorNumber} | matIndex={targetMatIndex} | color={c}", this);
+            Debug.Log($"[BodyColor] Applied _Color tint | fromActor={info.Sender?.ActorNumber} | color={c}", this);
     }
 }
