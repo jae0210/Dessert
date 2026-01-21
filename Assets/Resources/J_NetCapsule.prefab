@@ -310,6 +310,7 @@ MonoBehaviour:
   emotes:
   - {fileID: 21300000, guid: d6ba1189da9bbb04bb275bd9ea0a3641, type: 3}
   - {fileID: 21300000, guid: 89df4c6e977b797439eba4c494ad73dc, type: 3}
+  - {fileID: 21300000, guid: d11a159158327db478139730db89849e, type: 3}
   showSeconds: 2
   showOnSelf: 1
 --- !u!114 &2922838948064629621
@@ -330,6 +331,7 @@ MonoBehaviour:
   icons:
   - {fileID: 21300000, guid: d6ba1189da9bbb04bb275bd9ea0a3641, type: 3}
   - {fileID: 21300000, guid: 89df4c6e977b797439eba4c494ad73dc, type: 3}
+  - {fileID: 21300000, guid: d11a159158327db478139730db89849e, type: 3}
   rayOrigin: {fileID: 0}
   autoFindRayOrigin: 1
   maxRayDistance: 3
