@@ -375,8 +375,8 @@ MonoBehaviour:
   - {fileID: 21300000, guid: 2af84d76ec8c0bb48a3d95416a586603, type: 3}
   audioSource: {fileID: 4647731354174522982}
   emoteSounds:
-  - {fileID: 8300000, guid: 1e46d9019a1062445a651ceecfc0d5e8, type: 3}
-  - {fileID: 8300000, guid: 1e46d9019a1062445a651ceecfc0d5e8, type: 3}
+  - {fileID: 8300000, guid: ad46535bde0de6742a029c451dec372a, type: 3}
+  - {fileID: 8300000, guid: ad46535bde0de6742a029c451dec372a, type: 3}
   displayDuration: 2
   popScale: {x: 0.0012, y: 0.0012, z: 0.0012}
 --- !u!82 &4647731354174522982
@@ -400,7 +400,7 @@ AudioSource:
   Priority: 128
   DopplerLevel: 1
   MinDistance: 1
-  MaxDistance: 20
+  MaxDistance: 500
   Pan2D: 0
   rolloffMode: 0
   BypassEffects: 0
