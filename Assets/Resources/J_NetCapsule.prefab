@@ -348,10 +348,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8f4d5bd281b826d438f32a1258ce3d8f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  bodyObjectName: Body
-  bodyRenderer: {fileID: 0}
-  targetMaterialNameContains: bobusang_body
-  fallbackMaterialIndex: 1
+  BodyObjectName: Body
+  BodyRenderer: {fileID: 7706477040880346112}
   debugLog: 1
 --- !u!1 &2527729277558790402
 GameObject:
@@ -933,5 +931,10 @@ Animator:
 --- !u!4 &5680327828213265613 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: aa912451236cea040bc0b2b36f156d36, type: 3}
+  m_PrefabInstance: {fileID: 5286712959137452838}
+  m_PrefabAsset: {fileID: 0}
+--- !u!23 &7706477040880346112 stripped
+MeshRenderer:
+  m_CorrespondingSourceObject: {fileID: -6652725513331149018, guid: aa912451236cea040bc0b2b36f156d36, type: 3}
   m_PrefabInstance: {fileID: 5286712959137452838}
   m_PrefabAsset: {fileID: 0}
