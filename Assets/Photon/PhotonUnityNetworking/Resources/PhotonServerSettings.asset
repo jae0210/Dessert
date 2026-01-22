@@ -42,6 +42,7 @@ MonoBehaviour:
   - RPC_PlayEmote
   - RPC_SetHatColor
   - RPC_SetBodyColor
+  - RpcShowAttention
   DisableAutoOpenWizard: 1
   ShowSettings: 0
   DevRegionSetOnce: 1
