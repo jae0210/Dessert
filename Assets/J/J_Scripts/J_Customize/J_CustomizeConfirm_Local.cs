@@ -7,7 +7,7 @@ public class J_CustomizeConfirm_Local : MonoBehaviour
     public const string KEY_HAT = "hatCol";
 
     public J_ColorPaletteUI_Local paletteUI;
-    public string mainSceneName = "Room_J_Tttt";
+    public string mainSceneName = "Room_J_T";
 
     public void Confirm()
     {
