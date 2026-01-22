@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: aa912451236cea040bc0b2b36f156d36
+guid: 1b3b92ca3cf35ae45bcdc3d42d73c5ac
 ModelImporter:
   serializedVersion: 22200
   internalIDToNameTable: []
@@ -82,62 +82,7 @@ ModelImporter:
   humanDescription:
     serializedVersion: 3
     human: []
-    skeleton:
-    - name: Bobusang (2)(Clone)
-      parentName: 
-      position: {x: 0, y: 0, z: 0}
-      rotation: {x: 0, y: 0, z: 0, w: 1}
-      scale: {x: 1, y: 1, z: 1}
-    - name: Body
-      parentName: Bobusang (2)(Clone)
-      position: {x: -0, y: 0.14660531, z: 0.015734749}
-      rotation: {x: -0.7071068, y: 0, z: -0, w: 0.7071067}
-      scale: {x: 7.975757, y: 4.4850287, z: 5.981989}
-    - name: Hat
-      parentName: Bobusang (2)(Clone)
-      position: {x: 0.0007367295, y: 0.30068704, z: 0.020529475}
-      rotation: {x: -0.061197616, y: 0.07608144, z: -0.0046784, w: 0.9952108}
-      scale: {x: 0.14272344, y: 0.12744877, z: 0.14251304}
-    - name: Head
-      parentName: Bobusang (2)(Clone)
-      position: {x: -0.0005446239, y: 0.2721921, z: 0.012219528}
-      rotation: {x: 0.00000010677016, y: 0.7071069, z: -0.70710665, w: 1.0478086e-14}
-      scale: {x: 9.157554, y: 9.157554, z: 7.3416924}
-    - name: Left_arm
-      parentName: Bobusang (2)(Clone)
-      position: {x: 0.10108216, y: 0.18253303, z: 0.0244274}
-      rotation: {x: 0.56855816, y: 0.42093277, z: 0.41845164, w: 0.56960994}
-      scale: {x: -3.452775, y: -1.8267702, z: -4.7513223}
-    - name: Left_arm.001
-      parentName: Bobusang (2)(Clone)
-      position: {x: 2.3283064e-10, y: -4.656613e-10, z: 0}
-      rotation: {x: 0.49656892, y: -0.4942864, z: 0.503813, w: 0.5052452}
-      scale: {x: -6.267169, y: -4.113403, z: -7.3519354}
-    - name: Left_arm.002
-      parentName: Bobusang (2)(Clone)
-      position: {x: -0, y: -9.313226e-10, z: 1.4551915e-11}
-      rotation: {x: 0.50524515, y: -0.50381315, z: -0.49428627, w: -0.496569}
-      scale: {x: 6.267169, y: 4.113403, z: 7.3519354}
-    - name: Neck
-      parentName: Bobusang (2)(Clone)
-      position: {x: -0, y: 0.20504639, z: 0.023484582}
-      rotation: {x: 0.00000013767877, y: 0.7071068, z: 0.70710677, w: -0.00000013767878}
-      scale: {x: 2.1004653, y: 1.7952117, z: 1.746789}
-    - name: Right_arm
-      parentName: Bobusang (2)(Clone)
-      position: {x: -0.101184435, y: 0.18245983, z: 0.02437625}
-      rotation: {x: -0.56983876, y: 0.4186691, z: -0.418669, w: 0.5698388}
-      scale: {x: 3.4520264, y: 1.8267618, z: 4.75264}
-    - name: Sphere
-      parentName: Bobusang (2)(Clone)
-      position: {x: 0.06291246, y: 0.3513204, z: 0.003443746}
-      rotation: {x: 0.5297455, y: 0.4683694, z: -0.5297453, w: -0.46836925}
-      scale: {x: 2.9306393, y: 2.9306393, z: 2.3495195}
-    - name: Sphere.001
-      parentName: Bobusang (2)(Clone)
-      position: {x: -0.06242115, y: 0.3513204, z: 0.003443746}
-      rotation: {x: 0.5297455, y: 0.4683694, z: -0.5297453, w: -0.46836925}
-      scale: {x: 2.9306393, y: 2.9306393, z: 2.3495195}
+    skeleton: []
     armTwist: 0.5
     foreArmTwist: 0.5
     upperLegTwist: 0.5
