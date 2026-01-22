@@ -16,26 +16,25 @@ public class J_PUNPlayerAnim_Walk : MonoBehaviourPun, IPunObservable
     [Header("Tuning")]
     [SerializeField] private float speedMultiplier = 1f;
 
-    [Tooltip("원격 플레이어만 부드럽게 보간할 때 사용 (로컬은 즉시 반영)")]
-    [SerializeField] private float dampTime = 0.12f;
+    [Tooltip("원격만 부드럽게 보이게 하는 보간 시간")]
+    [SerializeField] private float remoteDampTime = 0.12f;
 
     [Header("Teleport Cut")]
     [SerializeField] private float teleportDistanceCutoff = 0.8f;
 
     [Header("Stop Dead Zone")]
-    [Tooltip("이 값보다 느리면 멈춘 것으로 처리해서 Idle 전환 딜레이/떨림을 줄임")]
+    [Tooltip("이 값보다 느리면 0으로 처리(멈출 때 잔떨림 제거)")]
     [SerializeField] private float stopDeadZone = 0.05f;
 
-    private CharacterController cc;
     private Vector3 prevPos;
-    private float netSpeed;
+    private float netSpeed;         // 원격에서 받은 speed
+    private float localSpeedToSend; // 로컬이 계산해서 보낼 speed
 
     void Awake()
     {
         if (!animator) animator = GetComponentInChildren<Animator>(true);
         if (!speedSource) speedSource = transform;
 
-        cc = GetComponent<CharacterController>();
         prevPos = speedSource.position;
     }
 
@@ -45,32 +44,25 @@ public class J_PUNPlayerAnim_Walk : MonoBehaviourPun, IPunObservable
 
         if (photonView.IsMine)
         {
-            float speed;
+            // ✅ 이동량(델타) 기반 속도: 어떤 이동 방식이든 확실히 잡힘
+            Vector3 cur = speedSource.position;
+            Vector3 delta = cur - prevPos;
+            prevPos = cur;
 
-            // 1) CC가 있으면 velocity가 제일 안정적
-            if (cc != null)
-            {
-                Vector3 v = cc.velocity;
-                speed = new Vector2(v.x, v.z).magnitude * speedMultiplier;
-            }
-            else
-            {
-                // 2) 없으면 위치 변화량으로 계산
-                Vector3 cur = speedSource.position;
-                Vector3 delta = cur - prevPos;
-                prevPos = cur;
+            // 텔레포트/순간이동 컷
+            if (delta.magnitude > teleportDistanceCutoff) delta = Vector3.zero;
 
-                if (delta.magnitude > teleportDistanceCutoff) delta = Vector3.zero;
+            float dt = Mathf.Max(Time.deltaTime, 0.0001f);
+            float speed = new Vector2(delta.x, delta.z).magnitude / dt;
+            speed *= speedMultiplier;
 
-                float dt = Mathf.Max(Time.deltaTime, 0.0001f);
-                speed = new Vector2(delta.x, delta.z).magnitude / dt;
-                speed *= speedMultiplier;
-            }
-
-            // 멈출 때 미세 떨림/관성 컷
+            // 멈출 때 잔떨림 컷
             if (speed < stopDeadZone) speed = 0f;
 
-            // ✅ 로컬은 즉시 반영(딜레이 0)
+            // ✅ 보낼 값 저장(이 값 그대로 네트워크 전송)
+            localSpeedToSend = speed;
+
+            // ✅ 로컬은 즉시 반영(딜레이 거의 0)
             animator.SetFloat(speedParam, speed);
         }
         else
@@ -79,7 +71,7 @@ public class J_PUNPlayerAnim_Walk : MonoBehaviourPun, IPunObservable
             float remote = netSpeed;
             if (remote < stopDeadZone) remote = 0f;
 
-            animator.SetFloat(speedParam, remote, dampTime, Time.deltaTime);
+            animator.SetFloat(speedParam, remote, remoteDampTime, Time.deltaTime);
         }
     }
 
@@ -87,8 +79,8 @@ public class J_PUNPlayerAnim_Walk : MonoBehaviourPun, IPunObservable
     {
         if (stream.IsWriting)
         {
-            float s = animator ? animator.GetFloat(speedParam) : 0f;
-            stream.SendNext(s);
+            // ✅ animator.GetFloat() 말고, 로컬이 계산한 값을 그대로 보냄
+            stream.SendNext(localSpeedToSend);
         }
         else
         {
