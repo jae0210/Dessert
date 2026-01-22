@@ -8,7 +8,7 @@ public class TitleManager : MonoBehaviour
 
     public void StartGame()
     {
-        SceneManager.LoadScene("Room_Vote");
+        SceneManager.LoadScene("Room_J_T");
     }
 
     public void ShowPanel(GameObject panelToShow)

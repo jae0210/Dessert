@@ -6,30 +6,33 @@ using Photon.Realtime;
 public class J_RandomBodyColor_PUN : MonoBehaviourPun
 {
     [Header("Body 찾기")]
-    [SerializeField] private string BodyObjectName = "Body";
-    [SerializeField] private Renderer BodyRenderer;
+    [SerializeField] private string bodyObjectName = "Body";
+    [SerializeField] private Renderer bodyRenderer;
+
+    [Header("어느 머티리얼에 색을 입힐까?")]
+    [SerializeField] private string targetMaterialNameContains = "bobusang_body";
+    [SerializeField] private int fallbackMaterialIndex = 1;
 
     [Header("Debug Log")]
     [SerializeField] private bool debugLog = true;
+
+    private int targetMatIndex = -1;
 
     private IEnumerator Start()
     {
         yield return null;
 
         CacheBodyRenderer();
+        CacheTargetMaterialIndex();
 
-        if (debugLog)
+        if (debugLog && bodyRenderer != null)
         {
-            Debug.Log($"[BodyColor] Start | InRoom={PhotonNetwork.InRoom} | IsMine={photonView.IsMine} | ViewID={photonView.ViewID}", this);
-
-            if (BodyRenderer != null && BodyRenderer.sharedMaterial != null)
-            {
-                bool hasColor = BodyRenderer.sharedMaterial.HasProperty("_Color"); // ✅ 백슬래시 없음
-                Debug.Log($"[BodyColor] Mat={BodyRenderer.sharedMaterial.name} | Shader={BodyRenderer.sharedMaterial.shader.name} | Has _Color={hasColor}", this);
-            }
+            var sm = bodyRenderer.sharedMaterials;
+            Debug.Log($"[BodyColor] Start | mats={sm.Length} | targetMatIndex={targetMatIndex} | InRoom={PhotonNetwork.InRoom} | IsMine={photonView.IsMine}", this);
+            for (int i = 0; i < sm.Length; i++)
+                Debug.Log($"[BodyColor] sharedMat[{i}]={(sm[i] ? sm[i].name : "NULL")}", this);
         }
 
-        // 내 캐릭터만 랜덤 생성 -> RPC 전파
         if (photonView.IsMine)
         {
             Color c = Random.ColorHSV(0f, 1f, 0.6f, 1f, 0.6f, 1f);
@@ -39,44 +42,75 @@ public class J_RandomBodyColor_PUN : MonoBehaviourPun
 
     private void CacheBodyRenderer()
     {
-        if (BodyRenderer != null) return;
+        if (bodyRenderer != null) return;
 
-        Transform t = transform.Find(BodyObjectName);
-
+        Transform t = transform.Find(bodyObjectName);
         if (t == null)
         {
             foreach (Transform child in GetComponentsInChildren<Transform>(true))
-            {
-                if (child.name == BodyObjectName) { t = child; break; }
-            }
+                if (child.name == bodyObjectName) { t = child; break; }
         }
 
         if (t == null)
         {
-            Debug.LogWarning($"[BodyColor] '{BodyObjectName}' Transform NOT FOUND", this);
+            Debug.LogWarning($"[BodyColor] '{bodyObjectName}' Transform NOT FOUND", this);
             return;
         }
 
-        BodyRenderer = t.GetComponentInChildren<Renderer>(true);
+        bodyRenderer = t.GetComponentInChildren<Renderer>(true);
+    }
+
+    private void CacheTargetMaterialIndex()
+    {
+        targetMatIndex = -1;
+        if (bodyRenderer == null) return;
+
+        var mats = bodyRenderer.sharedMaterials;
+        if (mats == null || mats.Length == 0) return;
+
+        for (int i = 0; i < mats.Length; i++)
+        {
+            var m = mats[i];
+            if (m == null) continue;
+
+            if (!string.IsNullOrEmpty(targetMaterialNameContains) && m.name.Contains(targetMaterialNameContains))
+            {
+                targetMatIndex = i;
+                break;
+            }
+        }
+
+        if (targetMatIndex < 0)
+        {
+            if (fallbackMaterialIndex >= 0 && fallbackMaterialIndex < mats.Length)
+                targetMatIndex = fallbackMaterialIndex;
+            else
+                targetMatIndex = 0;
+        }
     }
 
     [PunRPC]
     private void RPC_SetBodyColor(float r, float g, float b, float a, PhotonMessageInfo info)
     {
-        if (BodyRenderer == null) CacheBodyRenderer();
-        if (BodyRenderer == null) return;
+        if (bodyRenderer == null) CacheBodyRenderer();
+        if (bodyRenderer == null) return;
+        if (targetMatIndex < 0) CacheTargetMaterialIndex();
 
         Color c = new Color(r, g, b, a);
 
-        // ✅ 인스펙터 Albedo 옆 색상칸 = _Color 변경(플레이어별 인스턴스)
-        var mats = BodyRenderer.materials;
-        for (int i = 0; i < mats.Length; i++)
+        // ✅ 이 방식이 오버레이(서브메시 1개/머티리얼 2개)에서도 가장 확실함
+        var mats = bodyRenderer.materials; // 인스턴스 생성(플레이어별)
+        if (mats == null || mats.Length == 0) return;
+        if (targetMatIndex < 0 || targetMatIndex >= mats.Length) return;
+
+        var m = mats[targetMatIndex];
+        if (m != null)
         {
-            if (mats[i] == null) continue;
-            if (mats[i].HasProperty("_Color")) mats[i].SetColor("_Color", c);
+            if (m.HasProperty("_Color")) m.SetColor("_Color", c);         // Standard
+            if (m.HasProperty("_BaseColor")) m.SetColor("_BaseColor", c); // URP 대비
         }
 
         if (debugLog)
-            Debug.Log($"[BodyColor] Applied _Color tint | fromActor={info.Sender?.ActorNumber} | color={c}", this);
+            Debug.Log($"[BodyColor] Applied to matIndex={targetMatIndex} | fromActor={info.Sender?.ActorNumber} | color={c}", this);
     }
 }
