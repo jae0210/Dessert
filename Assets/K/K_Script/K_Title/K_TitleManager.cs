@@ -1,4 +1,4 @@
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.SceneManagement;
 
 public class TitleManager : MonoBehaviour
@@ -8,7 +8,7 @@ public class TitleManager : MonoBehaviour
 
     public void StartGame()
     {
-        SceneManager.LoadScene("Room_J_T");
+        SceneManager.LoadScene("CustomizeScene");
     }
 
     public void ShowPanel(GameObject panelToShow)

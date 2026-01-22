@@ -493,7 +493,7 @@ MonoBehaviour:
   speedSource: {fileID: 0}
   speedParam: Speed
   speedMultiplier: 1
-  dampTime: 0
+  remoteDampTime: 0.12
   teleportDistanceCutoff: 0.8
   stopDeadZone: 0.05
 --- !u!1 &2527729277558790402
