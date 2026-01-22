@@ -6,16 +6,17 @@ using System.Collections;
 public class K_AttentionEmote : MonoBehaviourPun
 {
     [Header("UI Settings")]
-    [Tooltip("머리 위에 띄울 캔버스 오브젝트")]
+    [Tooltip("머리 위에 띄울 캔버스")]
     public GameObject attentionCanvasObj;
-    [Tooltip("이미지를 표시할 UI Image 컴포넌트")]
-    public Image displayImage;
-    [Tooltip("표시할 스프라이트 (0: 느낌표, 1: 물음표 등)")]
-    public Sprite[] emotionSprites;
+    [Tooltip("표시할 레거시 UI Text")]
+    public Text emoteText;
+
+    [Header("Emote Messages")]
+    public string[] emoteMessages; // 0: "!", 1: "?", 2: "도와주세요!" 등
 
     [Header("Sound")]
-    public AudioSource audioSource;      // 3D AudioSource 권장
-    public AudioClip[] emoteSounds;       // 0: 느낌표, 1: 물음표 등
+    public AudioSource audioSource;
+    public AudioClip[] emoteSounds;
 
     [Header("Animation")]
     public float displayDuration = 2.0f;
@@ -33,32 +34,30 @@ public class K_AttentionEmote : MonoBehaviourPun
 
     private void Update()
     {
-        // 내 캐릭터만 입력 처리
         if (!photonView.IsMine) return;
 
-        // ▶ 오른손 A 버튼 → 느낌표
+        // ▶ 오른손 버튼 → "!"
         if (OVRInput.GetDown(OVRInput.Button.Two, OVRInput.Controller.RTouch))
         {
-            photonView.RPC("RpcShowAttention", RpcTarget.All, 0);
+            photonView.RPC("RpcShowEmote", RpcTarget.All, 0);
 
-            // 진동 (로컬만)
+            // 진동 (로컬)
             OVRInput.SetControllerVibration(1, 1, OVRInput.Controller.RTouch);
             StartCoroutine(StopVibration(OVRInput.Controller.RTouch));
         }
 
-        // ▶ 왼손 X 버튼 → 물음표
+        // ▶ 왼손 버튼 → "?"
         if (OVRInput.GetDown(OVRInput.Button.Two, OVRInput.Controller.LTouch))
         {
-            if (emotionSprites.Length > 1)
-                photonView.RPC("RpcShowAttention", RpcTarget.All, 1);
+            if (emoteMessages.Length > 1)
+                photonView.RPC("RpcShowEmote", RpcTarget.All, 1);
 
-            // 진동 (로컬만)
+            // 진동 (로컬)
             OVRInput.SetControllerVibration(1, 1, OVRInput.Controller.LTouch);
             StartCoroutine(StopVibration(OVRInput.Controller.LTouch));
         }
     }
 
-    // ▶ 0.1초 후 진동 OFF
     IEnumerator StopVibration(OVRInput.Controller controller)
     {
         yield return new WaitForSeconds(0.1f);
@@ -67,23 +66,22 @@ public class K_AttentionEmote : MonoBehaviourPun
 
     // ▶ 모든 클라이언트에서 실행됨
     [PunRPC]
-    public void RpcShowAttention(int spriteIndex)
+    public void RpcShowEmote(int index)
     {
-        if (attentionCanvasObj == null) return;
+        if (attentionCanvasObj == null || emoteText == null) return;
 
-        // 이미지 변경
-        if (spriteIndex >= 0 && spriteIndex < emotionSprites.Length)
+        // 텍스트 설정
+        if (index >= 0 && index < emoteMessages.Length)
         {
-            displayImage.sprite = emotionSprites[spriteIndex];
+            emoteText.text = emoteMessages[index];
         }
 
-        // 🔊 사운드 재생 (모든 클라이언트)
-        if (audioSource != null && emoteSounds != null && spriteIndex < emoteSounds.Length)
+        // 🔊 사운드 재생
+        if (audioSource != null && emoteSounds != null && index < emoteSounds.Length)
         {
-            audioSource.PlayOneShot(emoteSounds[spriteIndex]);
+            audioSource.PlayOneShot(emoteSounds[index]);
         }
 
-        // 애니메이션 코루틴 재시작
         StopAllCoroutines();
         StartCoroutine(PopUpEffect());
     }
@@ -96,7 +94,7 @@ public class K_AttentionEmote : MonoBehaviourPun
         float timer = 0f;
         float popTime = 0.2f;
 
-        // 1. 팝업
+        // 팝업 애니메이션
         while (timer < popTime)
         {
             timer += Time.deltaTime;
@@ -105,13 +103,10 @@ public class K_AttentionEmote : MonoBehaviourPun
             yield return null;
         }
 
-        // 2. 원래 크기
         attentionCanvasObj.transform.localScale = originalScale;
 
-        // 3. 유지
         yield return new WaitForSeconds(displayDuration);
 
-        // 4. 숨김
         attentionCanvasObj.SetActive(false);
     }
 }
