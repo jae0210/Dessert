@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: 08931fb8fc36dc54f9b625f98bd4d550
+guid: d80c381419eb2e44cba9f887c7b8e0a3
 ModelImporter:
   serializedVersion: 22200
   internalIDToNameTable: []
@@ -7,8 +7,8 @@ ModelImporter:
   - first:
       type: UnityEngine:Texture2D
       assembly: UnityEngine.CoreModule
-      name: fish bread (1) (2)
-    second: {fileID: 2800000, guid: 8ee67802ee59f8e4eb775ceca712d098, type: 3}
+      name: Sundae
+    second: {fileID: 2800000, guid: 68b8d9a3aa02a1b4683e4f8fb52983f4, type: 3}
   materials:
     materialImportMode: 2
     materialName: 0
