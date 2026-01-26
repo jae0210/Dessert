@@ -318,6 +318,7 @@ MonoBehaviour:
   - {fileID: 7614369082132558595}
   - {fileID: 9215368114178878962}
   - {fileID: 381842286363508618}
+  - {fileID: 5910997968848489881}
 --- !u!114 &5726591967435821504
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1676,6 +1677,11 @@ Transform:
 --- !u!4 &5390682003889364501 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 6502182839619065283, guid: addba05eaecb9704bbecd2f6f6ce8a98, type: 3}
+  m_PrefabInstance: {fileID: 1221575487500323798}
+  m_PrefabAsset: {fileID: 0}
+--- !u!137 &5910997968848489881 stripped
+SkinnedMeshRenderer:
+  m_CorrespondingSourceObject: {fileID: -4396642182433536433, guid: addba05eaecb9704bbecd2f6f6ce8a98, type: 3}
   m_PrefabInstance: {fileID: 1221575487500323798}
   m_PrefabAsset: {fileID: 0}
 --- !u!137 &7614369082132558595 stripped
