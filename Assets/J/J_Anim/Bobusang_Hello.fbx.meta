@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: 60808e0564fd7a440872b98d380a12da
+guid: 78546fd68ae30a4439f18bcbeb2196ec
 ModelImporter:
   serializedVersion: 22200
   internalIDToNameTable: []
@@ -37,19 +37,19 @@ ModelImporter:
     extraUserProperties: []
     clipAnimations:
     - serializedVersion: 16
-      name: Bobusang_Idle
+      name: Bobusang_Hello
       takeName: mixamo.com
       internalID: -203655887218126122
       firstFrame: 0
-      lastFrame: 298
+      lastFrame: 82
       wrapMode: 0
       orientationOffsetY: 0
       level: 0
       cycleOffset: 0
       loop: 0
       hasAdditiveReferencePose: 0
-      loopTime: 1
-      loopBlend: 0
+      loopTime: 0
+      loopBlend: 1
       loopBlendOrientation: 0
       loopBlendPositionY: 0
       loopBlendPositionXZ: 0
