@@ -4,15 +4,23 @@ using UnityEngine;
 
 public class J_NetEmote : MonoBehaviourPun
 {
-    [Header("Renderer & Assets")]
-    [SerializeField] private SpriteRenderer emoteRenderer;
+    [Header("Renderers")]
+    [SerializeField] private SpriteRenderer headEmoteRenderer;   // 상대가 보는 머리 위
+    [SerializeField] private SpriteRenderer frontEmoteRenderer;  // 내가 보는 눈앞(로컬 전용)
+
+    [Header("Assets")]
     [SerializeField] private Sprite[] emotes;
 
     [Header("Options")]
     [SerializeField] private float showSeconds = 2f;
-    [SerializeField] private bool showOnSelf = false; // 나는 보일지 여부
+    [SerializeField] private bool showSelfInFront = true;
 
-    Coroutine running;
+    private Coroutine headRoutine;
+    private Coroutine frontRoutine;
+
+    // 토큰(시퀀스)으로 최신 재생만 유효하게 만들기
+    private int headSeq = 0;
+    private int frontSeq = 0;
 
     public Sprite[] EmoteSprites => emotes;
 
@@ -21,35 +29,76 @@ public class J_NetEmote : MonoBehaviourPun
     {
         if (!photonView.IsMine) return;
 
-        if (showOnSelf) PlayEmoteLocal(emoteIndex);
+        // 1) 나는 눈앞에
+        if (showSelfInFront)
+            PlayOnFront(emoteIndex);
 
-        // "내가 눌렀다"는 사실(결과)만 다른 사람에게 보냄
-        photonView.RPC(nameof(RPC_PlayEmote), RpcTarget.Others, emoteIndex);
+        // 2) 다른 사람들은 내 머리 위로 보게
+        photonView.RPC(nameof(RPC_PlayHeadEmote), RpcTarget.Others, emoteIndex);
     }
 
     [PunRPC]
-    void RPC_PlayEmote(int emoteIndex)
+    private void RPC_PlayHeadEmote(int emoteIndex)
     {
-        PlayEmoteLocal(emoteIndex);
+        PlayOnHead(emoteIndex);
     }
 
-    void PlayEmoteLocal(int emoteIndex)
+    private void PlayOnHead(int emoteIndex)
     {
-        if (emoteRenderer == null) return;
-        if (emotes == null || emotes.Length == 0) return;
-        if (emoteIndex < 0 || emoteIndex >= emotes.Length) return;
+        if (!IsValidIndex(emoteIndex) || headEmoteRenderer == null) return;
 
-        emoteRenderer.sprite = emotes[emoteIndex];
-        emoteRenderer.enabled = true;
+        headSeq++;
+        int seq = headSeq;
 
-        if (running != null) StopCoroutine(running);
-        running = StartCoroutine(HideAfter());
+        headEmoteRenderer.sprite = emotes[emoteIndex];
+        headEmoteRenderer.enabled = true;
+
+        if (headRoutine != null) StopCoroutine(headRoutine);
+        headRoutine = StartCoroutine(HideAfter(headEmoteRenderer, showSeconds, seq, isHead: true));
     }
 
-    IEnumerator HideAfter()
+    private void PlayOnFront(int emoteIndex)
     {
-        yield return new WaitForSeconds(showSeconds);
-        emoteRenderer.enabled = false;
-        running = null;
+        if (!IsValidIndex(emoteIndex)) return;
+
+        // front가 없으면 fallback으로 head에 뜨게
+        if (frontEmoteRenderer == null)
+        {
+            PlayOnHead(emoteIndex);
+            return;
+        }
+
+        frontSeq++;
+        int seq = frontSeq;
+
+        frontEmoteRenderer.sprite = emotes[emoteIndex];
+        frontEmoteRenderer.enabled = true;
+
+        if (frontRoutine != null) StopCoroutine(frontRoutine);
+        frontRoutine = StartCoroutine(HideAfter(frontEmoteRenderer, showSeconds, seq, isHead: false));
+    }
+
+    private IEnumerator HideAfter(SpriteRenderer r, float seconds, int seq, bool isHead)
+    {
+        yield return new WaitForSeconds(seconds);
+
+        // 최신 요청이 아닐 경우(중간에 다른 이모티콘이 재생된 경우) 무시
+        if (isHead)
+        {
+            if (seq != headSeq) yield break;
+            headRoutine = null;
+        }
+        else
+        {
+            if (seq != frontSeq) yield break;
+            frontRoutine = null;
+        }
+
+        if (r != null) r.enabled = false;
+    }
+
+    private bool IsValidIndex(int index)
+    {
+        return emotes != null && emotes.Length > 0 && index >= 0 && index < emotes.Length;
     }
 }
