@@ -1,41 +1,43 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
+using UnityEngine.EventSystems; // ✅ 네임스페이스 추가
 
-public class J_TabStyle : MonoBehaviour
+// ✅ IPointerEnterHandler 인터페이스 상속 추가
+public class J_TabStyle : MonoBehaviour, IPointerEnterHandler
 {
     public Toggle toggle;
     public Image background;
     public Text label;
     public GameObject underline;
 
-    [Header("Colors")]
-    public Color normalBg = new Color32(34, 41, 55, 200);   // #222937
-    public Color selectedBg = new Color32(46, 54, 68, 230); // #2E3644
-    public Color normalText = new Color32(190, 198, 210, 255);
-    public Color selectedText = Color.white;
+    public Color normalBg = Color.white;
+    public Color selectedBg = Color.white;
 
-    void Reset()
+    public Color normalText = Color.black;
+    public Color selectedText = Color.black;
+
+    void Start()
     {
-        toggle = GetComponent<Toggle>();
+        if (toggle != null)
+        {
+            toggle.onValueChanged.AddListener(OnChanged);
+            OnChanged(toggle.isOn);
+        }
     }
 
-    void OnEnable()
+    public void OnChanged(bool on)
     {
-        if (!toggle) toggle = GetComponent<Toggle>();
-        toggle.onValueChanged.AddListener(OnChanged);
-        OnChanged(toggle.isOn);
+        Debug.Log($"[UI Event] {gameObject.name} 상태 변경됨: {on}");
+
+        if (background != null) background.color = on ? selectedBg : normalBg;
+        if (label != null) label.color = on ? selectedText : normalText;
+        if (underline != null) underline.SetActive(on);
     }
 
-    void OnDisable()
+    // ✅ 레이가 UI 위에 올라갔을 때 실행되는 디버그 함수
+    public void OnPointerEnter(PointerEventData eventData)
     {
-        if (toggle) toggle.onValueChanged.RemoveListener(OnChanged);
-    }
-
-    void OnChanged(bool on)
-    {
-        if (background) background.color = on ? selectedBg : normalBg;
-        if (label) label.color = on ? selectedText : normalText;
-        if (underline) underline.SetActive(on);
+        Debug.Log($"<color=yellow>[Ray Hover]</color> {gameObject.name} 위에 레이가 닿았습니다!");
     }
 }
