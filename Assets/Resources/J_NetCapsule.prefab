@@ -54,7 +54,7 @@ MonoBehaviour:
   spokeCount: 8
   placeBetweenSpokes: 1
   radiusPadding: 40
-  buttonSize: {x: 90, y: 90}
+  buttonSize: {x: 40, y: 40}
   highlightedScale: 1.15
 --- !u!1 &1899023237803769337
 GameObject:
@@ -265,6 +265,8 @@ MonoBehaviour:
   - {fileID: 2769110996419994897}
   - {fileID: 7861287284069633543}
   - {fileID: 5910997968848489881}
+  - {fileID: 7614369082132558595}
+  - {fileID: 9215368114178878962}
 --- !u!114 &5726591967435821504
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -312,9 +314,14 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   emoteRenderer: {fileID: 1894252219734597584}
   emotes:
-  - {fileID: 21300000, guid: d6ba1189da9bbb04bb275bd9ea0a3641, type: 3}
-  - {fileID: 21300000, guid: 89df4c6e977b797439eba4c494ad73dc, type: 3}
-  - {fileID: 21300000, guid: d11a159158327db478139730db89849e, type: 3}
+  - {fileID: 21300000, guid: 981841947a748d14f812ac4dbfa8d5d7, type: 3}
+  - {fileID: 21300000, guid: 45a8e6e9d31f01d4f86fd200d3122402, type: 3}
+  - {fileID: 21300000, guid: d1ad49dec6ab84944b09f0bf224f2926, type: 3}
+  - {fileID: 21300000, guid: 83aaf01e6af9ced479cc9f06658e5bd4, type: 3}
+  - {fileID: 21300000, guid: 54b83b9a5ef6fc74da8fe2f8b1eb65bc, type: 3}
+  - {fileID: 21300000, guid: 8be5b8c9f388c5242a7b96ee8416d750, type: 3}
+  - {fileID: 21300000, guid: 18979bdd41109764882b1a8da8c5b66c, type: 3}
+  - {fileID: 21300000, guid: c474c972f8a4cce43baa2cd80a4f68f7, type: 3}
   showSeconds: 2
   showOnSelf: 1
 --- !u!114 &2922838948064629621
@@ -333,9 +340,14 @@ MonoBehaviour:
   menuRoot: {fileID: 8925811423144953287}
   radialMenuUI: {fileID: 8318479427816887909}
   icons:
-  - {fileID: 21300000, guid: d6ba1189da9bbb04bb275bd9ea0a3641, type: 3}
-  - {fileID: 21300000, guid: 89df4c6e977b797439eba4c494ad73dc, type: 3}
-  - {fileID: 21300000, guid: d11a159158327db478139730db89849e, type: 3}
+  - {fileID: 21300000, guid: 981841947a748d14f812ac4dbfa8d5d7, type: 3}
+  - {fileID: 21300000, guid: 45a8e6e9d31f01d4f86fd200d3122402, type: 3}
+  - {fileID: 21300000, guid: d1ad49dec6ab84944b09f0bf224f2926, type: 3}
+  - {fileID: 21300000, guid: 83aaf01e6af9ced479cc9f06658e5bd4, type: 3}
+  - {fileID: 21300000, guid: 54b83b9a5ef6fc74da8fe2f8b1eb65bc, type: 3}
+  - {fileID: 21300000, guid: 8be5b8c9f388c5242a7b96ee8416d750, type: 3}
+  - {fileID: 21300000, guid: 18979bdd41109764882b1a8da8c5b66c, type: 3}
+  - {fileID: 21300000, guid: c474c972f8a4cce43baa2cd80a4f68f7, type: 3}
   rayOrigin: {fileID: 0}
   autoFindRayOrigin: 1
   maxRayDistance: 3
@@ -1311,8 +1323,18 @@ SkinnedMeshRenderer:
   m_CorrespondingSourceObject: {fileID: -4396642182433536433, guid: 1b3b92ca3cf35ae45bcdc3d42d73c5ac, type: 3}
   m_PrefabInstance: {fileID: 1221575487500323798}
   m_PrefabAsset: {fileID: 0}
+--- !u!137 &7614369082132558595 stripped
+SkinnedMeshRenderer:
+  m_CorrespondingSourceObject: {fileID: 8743813690021804245, guid: 1b3b92ca3cf35ae45bcdc3d42d73c5ac, type: 3}
+  m_PrefabInstance: {fileID: 1221575487500323798}
+  m_PrefabAsset: {fileID: 0}
 --- !u!137 &7861287284069633543 stripped
 SkinnedMeshRenderer:
   m_CorrespondingSourceObject: {fileID: -150009337949190703, guid: 1b3b92ca3cf35ae45bcdc3d42d73c5ac, type: 3}
+  m_PrefabInstance: {fileID: 1221575487500323798}
+  m_PrefabAsset: {fileID: 0}
+--- !u!137 &9215368114178878962 stripped
+SkinnedMeshRenderer:
+  m_CorrespondingSourceObject: {fileID: 8003028576119023140, guid: 1b3b92ca3cf35ae45bcdc3d42d73c5ac, type: 3}
   m_PrefabInstance: {fileID: 1221575487500323798}
   m_PrefabAsset: {fileID: 0}
