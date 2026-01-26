@@ -21,18 +21,30 @@ public class J_ColorPaletteUI_Local : MonoBehaviour
     public Color selectedBody = Color.white;
     public Color selectedHat = Color.white;
 
-    GameObject lastSelectedBorder;
+    // ✅ 이제는 SelectedBorder가 아니라 “마지막 선택된 Swatch UI”를 기억
+    J_SwatchButtonUI lastSelectedSwatch;
 
     void Start()
     {
-        // 기본값(첫 색) 선택
         if (bodyPalette != null && bodyPalette.Length > 0) selectedBody = bodyPalette[0];
         if (hatPalette != null && hatPalette.Length > 0) selectedHat = hatPalette[0];
 
         preview?.SetBodyColor(selectedBody);
         preview?.SetHatColor(selectedHat);
 
-        Rebuild(); // 여기서 기본 선택 테두리도 켬
+        Rebuild();
+    }
+
+    // ✅ Toggle의 OnValueChanged(bool)에서 쓰기 좋게 래퍼 추가
+    public void OnBodyTabChanged(bool isOn)
+    {
+        if (!isOn) return;
+        SetTargetBody();
+    }
+    public void OnHatTabChanged(bool isOn)
+    {
+        if (!isOn) return;
+        SetTargetHat();
     }
 
     public void SetTargetBody()
@@ -53,52 +65,62 @@ public class J_ColorPaletteUI_Local : MonoBehaviour
         for (int i = contentParent.childCount - 1; i >= 0; i--)
             Destroy(contentParent.GetChild(i).gameObject);
 
-        lastSelectedBorder = null;
+        lastSelectedSwatch = null;
 
         Color[] palette = currentTarget == TargetPart.Body ? bodyPalette : hatPalette;
         if (palette == null) return;
 
-        // 현재 파트에서 “이미 선택된 색”이 무엇인지
         Color currentSelected = currentTarget == TargetPart.Body ? selectedBody : selectedHat;
 
         for (int i = 0; i < palette.Length; i++)
         {
-            Color c = palette[i];   // 루프 캡처 안전
+            Color c = palette[i];
             c.a = 1f;
 
             var btn = Instantiate(swatchPrefab, contentParent);
 
-            // 버튼 색 표시
-            var img = btn.GetComponent<Image>();
-            if (img != null) img.color = c;
-
-            // 테두리 찾기
-            Transform borderT = btn.transform.Find("SelectedBorder");
-            GameObject borderGO = borderT ? borderT.gameObject : null;
-            if (borderGO != null) borderGO.SetActive(false);
-
-            // 클릭 연결
-            btn.onClick.AddListener(() => Pick(c, borderGO));
-
-            // ✅ 기본 선택 테두리 켜기(현재 선택색과 같으면)
-            if (ApproximatelySameColor(c, currentSelected) && borderGO != null)
+            // ✅ Swatch UI 컴포넌트로 ColorFill에 색 넣기
+            var ui = btn.GetComponent<J_SwatchButtonUI>();
+            if (ui != null)
             {
-                borderGO.SetActive(true);
-                lastSelectedBorder = borderGO;
+                ui.SetColor(c);
+                ui.SetSelected(false);
+            }
+            else
+            {
+                // 혹시 컴포넌트 없을 때 대비(백업): ColorFill 찾아서 칠함
+                var fillT = btn.transform.Find("ColorFill");
+                if (fillT)
+                {
+                    var fillImg = fillT.GetComponent<Image>();
+                    if (fillImg) fillImg.color = c;
+                }
+            }
+
+            // 클로저 캡처 안전
+            var uiCaptured = ui;
+            btn.onClick.AddListener(() => Pick(c, uiCaptured));
+
+            // 기본 선택 표시
+            if (ui != null && ApproximatelySameColor(c, currentSelected))
+            {
+                ui.SetSelected(true);
+                lastSelectedSwatch = ui;
             }
         }
     }
 
-    void Pick(Color c, GameObject borderObj)
+    void Pick(Color c, J_SwatchButtonUI ui)
     {
         c.a = 1f;
 
-        if (lastSelectedBorder != null) lastSelectedBorder.SetActive(false);
+        if (lastSelectedSwatch != null)
+            lastSelectedSwatch.SetSelected(false);
 
-        if (borderObj != null)
+        if (ui != null)
         {
-            borderObj.SetActive(true);
-            lastSelectedBorder = borderObj;
+            ui.SetSelected(true);
+            lastSelectedSwatch = ui;
         }
 
         if (currentTarget == TargetPart.Body)
@@ -113,7 +135,6 @@ public class J_ColorPaletteUI_Local : MonoBehaviour
         }
     }
 
-    // Color는 float라 “완전 동일” 비교가 안 맞을 때가 있어. 가까우면 같은 걸로 처리.
     bool ApproximatelySameColor(Color a, Color b)
     {
         return Mathf.Abs(a.r - b.r) < 0.01f &&
