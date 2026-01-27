@@ -134,6 +134,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   localOffset: {x: 0, y: -0.05, z: 1.2}
   lockRoll: 1
+  emoteSfx: {fileID: 0}
+  sfxVolume: 0.8
+  playSfxWhenShown: 1
+  playSfxWhenSpriteChanged: 1
 --- !u!1 &2331243695098103043
 GameObject:
   m_ObjectHideFlags: 0
@@ -939,7 +943,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 0.15, y: 0.15, z: 0.15}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 3821380171671045253}
@@ -1010,6 +1014,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   localOffset: {x: 0, y: -0.05, z: 3}
   lockRoll: 1
+  emoteSfx: {fileID: 8300000, guid: ad46535bde0de6742a029c451dec372a, type: 3}
+  sfxVolume: 0.8
+  playSfxWhenShown: 1
+  playSfxWhenSpriteChanged: 1
 --- !u!1 &5684425581149011087
 GameObject:
   m_ObjectHideFlags: 0

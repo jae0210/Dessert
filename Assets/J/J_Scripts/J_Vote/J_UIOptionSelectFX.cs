@@ -10,8 +10,8 @@ public class J_UIOptionSelectFX : MonoBehaviour, IPointerEnterHandler, IPointerE
     public Image frameImage;         // SelectedFrame의 Image (Raycast Target OFF 권장)
 
     [Header("Scale")]
-    public float hoverScale = 1.03f;     // ✅ 레이로 가리킬 때
-    public float selectedScale = 1.06f;  // ✅ 선택됐을 때
+    public float hoverScale = 1.03f;     // 레이로 가리킬 때
+    public float selectedScale = 1.06f;  // 선택됐을 때
     public float animTime = 0.10f;
 
     [Header("Frame Color")]
@@ -51,7 +51,7 @@ public class J_UIOptionSelectFX : MonoBehaviour, IPointerEnterHandler, IPointerE
         targetRoot.localScale = baseScale * selectedScale * s;
     }
 
-    // ✅ 기존(선택) API는 그대로 유지
+    // 기존(선택) API는 그대로 유지
     public void SetSelected(bool on)
     {
         if (targetRoot == null) return;
@@ -68,7 +68,7 @@ public class J_UIOptionSelectFX : MonoBehaviour, IPointerEnterHandler, IPointerE
         StartTransition();
     }
 
-    // ✅ 레이가 올라올 때(hover)
+    // 레이가 올라올 때(hover)
     public void OnPointerEnter(PointerEventData eventData)
     {
         isHover = true;
@@ -82,7 +82,7 @@ public class J_UIOptionSelectFX : MonoBehaviour, IPointerEnterHandler, IPointerE
         StartTransition();
     }
 
-    // ✅ 레이가 빠질 때
+    // 레이가 빠질 때
     public void OnPointerExit(PointerEventData eventData)
     {
         isHover = false;

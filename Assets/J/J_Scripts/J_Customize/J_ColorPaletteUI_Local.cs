@@ -22,22 +22,53 @@ public class J_ColorPaletteUI_Local : MonoBehaviour
     public Color selectedHat = Color.white;
     public TargetPart currentTarget = TargetPart.Body;
 
+    [Header("SFX")]
+    public AudioSource sfxSource;
+    public AudioClip pickSfx;           // 스와치(색상) 클릭
+    public AudioClip tabSfx;            // 바디/모자 탭 전환
+    [Range(0f, 1f)] public float pickVolume = 0.8f;
+    [Range(0f, 1f)] public float tabVolume = 0.8f;
+    public bool playOnlyWhenChanged = true;
+    public bool suppressFirstTabSound = true; // 시작 시 토글 초기 호출에서 소리 안 나게
+
     private J_SwatchButtonUI lastSelected;
+    private bool sfxReady;
 
     void Start()
     {
+        // AudioSource 준비
+        if (sfxSource == null)
+        {
+            sfxSource = GetComponent<AudioSource>();
+            if (sfxSource == null) sfxSource = gameObject.AddComponent<AudioSource>();
+            sfxSource.playOnAwake = false;
+            sfxSource.spatialBlend = 0f; // UI용 2D
+        }
+
         // 초기값이 비어있으면 팔레트 첫 색으로
         if (bodyPalette != null && bodyPalette.Length > 0 && selectedBody == default) selectedBody = bodyPalette[0];
         if (hatPalette != null && hatPalette.Length > 0 && selectedHat == default) selectedHat = hatPalette[0];
 
         ApplyToPreview_();
         Rebuild_();
+
+        // 시작 직후 탭 이벤트로 소리 나는 거 방지용
+        sfxReady = !suppressFirstTabSound;
+        if (suppressFirstTabSound)
+            Invoke(nameof(EnableTabSfx_), 0.05f);
     }
+
+    void EnableTabSfx_() => sfxReady = true;
 
     // ✅ 토글 OnValueChanged에 그대로 연결하면 됨
     public void OnBodyTab(bool on)
     {
         if (!on) return;
+
+        // 탭 사운드
+        if (sfxReady && tabSfx != null && sfxSource != null)
+            sfxSource.PlayOneShot(tabSfx, tabVolume);
+
         currentTarget = TargetPart.Body;
         Rebuild_();
     }
@@ -45,6 +76,11 @@ public class J_ColorPaletteUI_Local : MonoBehaviour
     public void OnHatTab(bool on)
     {
         if (!on) return;
+
+        // 탭 사운드
+        if (sfxReady && tabSfx != null && sfxSource != null)
+            sfxSource.PlayOneShot(tabSfx, tabVolume);
+
         currentTarget = TargetPart.Hat;
         Rebuild_();
     }
@@ -53,6 +89,14 @@ public class J_ColorPaletteUI_Local : MonoBehaviour
     public void PickFromSwatch(J_SwatchButtonUI swatch)
     {
         if (!swatch) return;
+
+        // 같은 색을 또 눌렀을 때 소리/처리 생략(옵션)
+        if (playOnlyWhenChanged && lastSelected == swatch)
+            return;
+
+        // 스와치 클릭 사운드
+        if (pickSfx != null && sfxSource != null)
+            sfxSource.PlayOneShot(pickSfx, pickVolume);
 
         if (lastSelected) lastSelected.SetSelected(false);
         swatch.SetSelected(true);
