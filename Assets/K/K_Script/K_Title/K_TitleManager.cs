@@ -8,7 +8,7 @@ public class TitleManager : MonoBehaviour
 
     public void StartGame()
     {
-        SceneManager.LoadScene("CustomizeScene");
+        SceneManager.LoadScene("K_TT");
     }
 
     public void ShowPanel(GameObject panelToShow)
