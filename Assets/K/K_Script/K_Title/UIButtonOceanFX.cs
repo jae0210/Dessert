@@ -1,4 +1,4 @@
-using UnityEngine;
+ï»¿using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.EventSystems;
 using System.Collections;
@@ -14,17 +14,17 @@ public class UIButtonOceanFX : MonoBehaviour,
     public float pressedScale = 0.95f;
     public float releaseOvershoot = 1.06f;
     public float animTime = 0.10f;
-    public float tiltZOnHover = 2f;
+    public float tiltZOnHover = 0f;
 
     [Header("Ripple (masked by RectMask2D)")]
-    public Sprite rippleSprite;                 // Èò¡æÅõ¸í ¿øÇü ±×¶óµğ¾ğÆ®
+    public Sprite rippleSprite;                 // í°â†’íˆ¬ëª… ì›í˜• ê·¸ë¼ë””ì–¸íŠ¸
     public Color rippleColor = new Color(1, 1, 1, 0.35f);
     public float rippleStartScale = 0.2f;
     public float rippleEndScale = 1.6f;
     public float rippleTime = 0.35f;
 
     [Header("Shine Sweep (Hover)")]
-    public Image shineImage;                    // ÀÚ½Ä Image (ui_shine_strip)
+    public Image shineImage;                    // ìì‹ Image (ui_shine_strip)
     public float shineDuration = 0.35f;
     [Range(0f, 1f)] public float shineOpacity = 0.35f;
     public float shinePause = 1.2f;
@@ -40,7 +40,7 @@ public class UIButtonOceanFX : MonoBehaviour,
     Quaternion baseRot;
     bool pointerInside;
 
-    // °³º° ÄÚ·çÆ¾ ÇÚµé(Æ®À©/»şÀÎ ºĞ¸®)
+    // ê°œë³„ ì½”ë£¨í‹´ í•¸ë“¤(íŠ¸ìœˆ/ìƒ¤ì¸ ë¶„ë¦¬)
     Coroutine tweenCo;
     Coroutine shineCo;
 
@@ -53,7 +53,7 @@ public class UIButtonOceanFX : MonoBehaviour,
         if (shineImage != null)
         {
             shineImage.raycastTarget = false;
-            var c = shineImage.color; c.a = 0f; shineImage.color = c; // ÃÖÃÊ¿£ ¼û±è
+            var c = shineImage.color; c.a = 0f; shineImage.color = c; // ìµœì´ˆì—” ìˆ¨ê¹€
         }
     }
 
@@ -73,7 +73,7 @@ public class UIButtonOceanFX : MonoBehaviour,
         pointerInside = true;
         if (hoverClip && audioSource) audioSource.PlayOneShot(hoverClip, 0.6f);
 
-        StopTween(); // ¡Ú »şÀÎÀº °Çµå¸®Áö ¾ÊÀ½
+        StopTween(); // â˜… ìƒ¤ì¸ì€ ê±´ë“œë¦¬ì§€ ì•ŠìŒ
         tweenCo = StartCoroutine(TweenScaleRot(baseScale * hoverScale, Quaternion.Euler(0, 0, tiltZOnHover), animTime));
 
         if (shineImage)
@@ -98,7 +98,7 @@ public class UIButtonOceanFX : MonoBehaviour,
     {
         if (pressClip && audioSource) audioSource.PlayOneShot(pressClip, 0.7f);
 
-        StopTween(); // ¡Ú »şÀÎ À¯Áö
+        StopTween(); // â˜… ìƒ¤ì¸ ìœ ì§€
         tweenCo = StartCoroutine(TweenScaleRot(baseScale * pressedScale, Quaternion.identity, animTime * 0.7f));
     }
 
@@ -106,7 +106,7 @@ public class UIButtonOceanFX : MonoBehaviour,
     {
         if (pointerInside)
         {
-            StopTween(); // ¡Ú »şÀÎ À¯Áö
+            StopTween(); // â˜… ìƒ¤ì¸ ìœ ì§€
             tweenCo = StartCoroutine(BounceThenReturn());
             SpawnRipple(e);
         }
@@ -160,7 +160,7 @@ public class UIButtonOceanFX : MonoBehaviour,
         var img = go.GetComponent<Image>();
         img.sprite = rippleSprite;
         img.raycastTarget = false;
-        img.color = rippleColor; // ¡Ú ¸ÓÆ¼¸®¾ó »ç¿ë ¾È ÇÔ
+        img.color = rippleColor; // â˜… ë¨¸í‹°ë¦¬ì–¼ ì‚¬ìš© ì•ˆ í•¨
 
         var rrt = go.GetComponent<RectTransform>();
         rrt.anchorMin = rrt.anchorMax = new Vector2(0.5f, 0.5f);
@@ -215,7 +215,7 @@ public class UIButtonOceanFX : MonoBehaviour,
         var srt = shineImage.rectTransform;
         var btn = rt;
 
-        float halfW = btn.rect.width * 0.55f;   // ½ÃÀÛ/Á¾·á ÁöÁ¡(¹öÆ° ¹Û)
+        float halfW = btn.rect.width * 0.55f;   // ì‹œì‘/ì¢…ë£Œ ì§€ì (ë²„íŠ¼ ë°–)
         Vector2 start = new Vector2(-halfW, 0f);
         Vector2 end = new Vector2(+halfW, 0f);
 
@@ -227,7 +227,7 @@ public class UIButtonOceanFX : MonoBehaviour,
         {
             t += Time.unscaledDeltaTime;
             float p = Mathf.Clamp01(t / shineDuration);
-            float a = Mathf.Sin(p * Mathf.PI); // Áß¾Ó¿¡¼­ ÃÖ´ë
+            float a = Mathf.Sin(p * Mathf.PI); // ì¤‘ì•™ì—ì„œ ìµœëŒ€
             srt.anchoredPosition = Vector2.Lerp(start, end, p);
             c.a = a * shineOpacity;
             shineImage.color = c;
