@@ -419,6 +419,37 @@ Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 5a19eb9d41daf0d40b8d77e0b16789af, type: 3}
   m_PrefabInstance: {fileID: 1993393414}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &33883338
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 33883339}
+  m_Layer: 0
+  m_Name: Exhibit_05_LookPoint
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &33883339
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 33883338}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0.0382, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1216999550}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &41208111
 GameObject:
   m_ObjectHideFlags: 0
@@ -997,7 +1028,7 @@ MonoBehaviour:
   m_HandleRect: {fileID: 5738353}
   m_Direction: 2
   m_Value: 0
-  m_Size: 0.99997056
+  m_Size: 1
   m_NumberOfSteps: 0
   m_OnValueChanged:
     m_PersistentCalls:
@@ -1383,6 +1414,37 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 3069280998600719809, guid: 03b77f4eaaf41ce45a064df9bd292861, type: 3}
   m_PrefabInstance: {fileID: 1445845763}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &99068118
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 99068119}
+  m_Layer: 0
+  m_Name: Exhibit_03_LookPoint
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &99068119
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 99068118}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0.0413, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 158039499}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &99089904
 GameObject:
   m_ObjectHideFlags: 0
@@ -3203,6 +3265,7 @@ Transform:
   - {fileID: 1960615994}
   - {fileID: 1822830812}
   - {fileID: 375981831}
+  - {fileID: 99068119}
   m_Father: {fileID: 1891574433}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!23 &158039500
@@ -5417,6 +5480,13 @@ MonoBehaviour:
   secondaryGrabDistance: 0.3
   useIndexTrigger: 0
   pressThreshold: 0.55
+  enableHaptics: 1
+  grabHapticAmp: 0.6
+  grabHapticFreq: 0.9
+  grabHapticDuration: 0.08
+  secondaryHapticAmp: 0.4
+  secondaryHapticFreq: 0.9
+  secondaryHapticDuration: 0.06
 --- !u!114 &256110137
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5805,6 +5875,13 @@ MonoBehaviour:
   secondaryGrabDistance: 0.3
   useIndexTrigger: 0
   pressThreshold: 0.55
+  enableHaptics: 1
+  grabHapticAmp: 0.6
+  grabHapticFreq: 0.9
+  grabHapticDuration: 0.08
+  secondaryHapticAmp: 0.4
+  secondaryHapticFreq: 0.9
+  secondaryHapticDuration: 0.06
 --- !u!114 &275569586
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -6289,6 +6366,13 @@ MonoBehaviour:
   secondaryGrabDistance: 0.3
   useIndexTrigger: 0
   pressThreshold: 0.55
+  enableHaptics: 1
+  grabHapticAmp: 0.6
+  grabHapticFreq: 0.9
+  grabHapticDuration: 0.08
+  secondaryHapticAmp: 0.4
+  secondaryHapticFreq: 0.9
+  secondaryHapticDuration: 0.06
 --- !u!114 &277823699
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -7189,6 +7273,37 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 343752794}
   m_CullTransparentMesh: 1
+--- !u!1 &346906453
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 346906454}
+  m_Layer: 0
+  m_Name: Exhibit_10_LookPoint
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &346906454
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 346906453}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: -0.0312, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 818082127}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &349252408 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: 4db9865a52cc06f4495c5d33d2e05ee7, type: 3}
@@ -7655,13 +7770,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 661efc61bfa0af44fb496babb42f2ffe, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  leftGrabber: {fileID: 0}
-  rightGrabber: {fileID: 0}
+  leftGrabber: {fileID: 73218628}
+  rightGrabber: {fileID: 158587309}
   leftGripTransform: {fileID: 0}
   rightGripTransform: {fileID: 0}
   secondaryGrabDistance: 0.3
   useIndexTrigger: 0
   pressThreshold: 0.55
+  enableHaptics: 1
+  grabHapticAmp: 0.6
+  grabHapticFreq: 0.9
+  grabHapticDuration: 0.08
+  secondaryHapticAmp: 0.4
+  secondaryHapticFreq: 0.9
+  secondaryHapticDuration: 0.06
 --- !u!114 &353210821
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -7972,6 +8094,13 @@ MonoBehaviour:
   secondaryGrabDistance: 0.3
   useIndexTrigger: 0
   pressThreshold: 0.55
+  enableHaptics: 1
+  grabHapticAmp: 0.6
+  grabHapticFreq: 0.9
+  grabHapticDuration: 0.08
+  secondaryHapticAmp: 0.4
+  secondaryHapticFreq: 0.9
+  secondaryHapticDuration: 0.06
 --- !u!114 &364268011
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -9155,6 +9284,13 @@ MonoBehaviour:
   secondaryGrabDistance: 0.3
   useIndexTrigger: 0
   pressThreshold: 0.55
+  enableHaptics: 1
+  grabHapticAmp: 0.6
+  grabHapticFreq: 0.9
+  grabHapticDuration: 0.08
+  secondaryHapticAmp: 0.4
+  secondaryHapticFreq: 0.9
+  secondaryHapticDuration: 0.06
 --- !u!114 &414444461
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -9772,6 +9908,13 @@ MonoBehaviour:
   secondaryGrabDistance: 0.3
   useIndexTrigger: 0
   pressThreshold: 0.55
+  enableHaptics: 1
+  grabHapticAmp: 0.6
+  grabHapticFreq: 0.9
+  grabHapticDuration: 0.08
+  secondaryHapticAmp: 0.4
+  secondaryHapticFreq: 0.9
+  secondaryHapticDuration: 0.06
 --- !u!114 &468755385
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -9981,7 +10124,7 @@ MonoBehaviour:
   m_HandleRect: {fileID: 115525410}
   m_Direction: 2
   m_Value: 0
-  m_Size: 0.99986905
+  m_Size: 1
   m_NumberOfSteps: 0
   m_OnValueChanged:
     m_PersistentCalls:
@@ -10753,6 +10896,13 @@ MonoBehaviour:
   secondaryGrabDistance: 0.3
   useIndexTrigger: 0
   pressThreshold: 0.55
+  enableHaptics: 1
+  grabHapticAmp: 0.6
+  grabHapticFreq: 0.9
+  grabHapticDuration: 0.08
+  secondaryHapticAmp: 0.4
+  secondaryHapticFreq: 0.9
+  secondaryHapticDuration: 0.06
 --- !u!135 &501443737
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -11498,6 +11648,13 @@ MonoBehaviour:
   secondaryGrabDistance: 0.3
   useIndexTrigger: 0
   pressThreshold: 0.55
+  enableHaptics: 1
+  grabHapticAmp: 0.6
+  grabHapticFreq: 0.9
+  grabHapticDuration: 0.08
+  secondaryHapticAmp: 0.4
+  secondaryHapticFreq: 0.9
+  secondaryHapticDuration: 0.06
 --- !u!114 &512422394
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -11872,6 +12029,13 @@ MonoBehaviour:
   secondaryGrabDistance: 0.3
   useIndexTrigger: 0
   pressThreshold: 0.55
+  enableHaptics: 1
+  grabHapticAmp: 0.6
+  grabHapticFreq: 0.9
+  grabHapticDuration: 0.08
+  secondaryHapticAmp: 0.4
+  secondaryHapticFreq: 0.9
+  secondaryHapticDuration: 0.06
 --- !u!114 &525728439
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -12155,6 +12319,13 @@ MonoBehaviour:
   secondaryGrabDistance: 0.3
   useIndexTrigger: 0
   pressThreshold: 0.55
+  enableHaptics: 1
+  grabHapticAmp: 0.6
+  grabHapticFreq: 0.9
+  grabHapticDuration: 0.08
+  secondaryHapticAmp: 0.4
+  secondaryHapticFreq: 0.9
+  secondaryHapticDuration: 0.06
 --- !u!114 &542184480
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -12731,6 +12902,13 @@ MonoBehaviour:
   secondaryGrabDistance: 0.3
   useIndexTrigger: 0
   pressThreshold: 0.55
+  enableHaptics: 1
+  grabHapticAmp: 0.6
+  grabHapticFreq: 0.9
+  grabHapticDuration: 0.08
+  secondaryHapticAmp: 0.4
+  secondaryHapticFreq: 0.9
+  secondaryHapticDuration: 0.06
 --- !u!114 &559603015
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -13605,6 +13783,13 @@ MonoBehaviour:
   secondaryGrabDistance: 0.3
   useIndexTrigger: 0
   pressThreshold: 0.55
+  enableHaptics: 1
+  grabHapticAmp: 0.6
+  grabHapticFreq: 0.9
+  grabHapticDuration: 0.08
+  secondaryHapticAmp: 0.4
+  secondaryHapticFreq: 0.9
+  secondaryHapticDuration: 0.06
 --- !u!114 &578223042
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -13991,6 +14176,9 @@ PrefabInstance:
       insertIndex: -1
       addedObject: {fileID: 1777875675}
     m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 4a5d174bbf97e474ea0dea4e8d8a417d, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1903546533}
     - targetCorrespondingSourceObject: {fileID: -516098083770646512, guid: 4a5d174bbf97e474ea0dea4e8d8a417d, type: 3}
       insertIndex: -1
       addedObject: {fileID: 168728510}
@@ -16395,6 +16583,13 @@ MonoBehaviour:
   secondaryGrabDistance: 0.3
   useIndexTrigger: 0
   pressThreshold: 0.55
+  enableHaptics: 1
+  grabHapticAmp: 0.6
+  grabHapticFreq: 0.9
+  grabHapticDuration: 0.08
+  secondaryHapticAmp: 0.4
+  secondaryHapticFreq: 0.9
+  secondaryHapticDuration: 0.06
 --- !u!114 &753043862
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -16549,6 +16744,13 @@ MonoBehaviour:
   secondaryGrabDistance: 0.3
   useIndexTrigger: 0
   pressThreshold: 0.55
+  enableHaptics: 1
+  grabHapticAmp: 0.6
+  grabHapticFreq: 0.9
+  grabHapticDuration: 0.08
+  secondaryHapticAmp: 0.4
+  secondaryHapticFreq: 0.9
+  secondaryHapticDuration: 0.06
 --- !u!135 &768224559
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -16733,7 +16935,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: -119.99999}
+  m_AnchoredPosition: {x: 0, y: -120}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &770855040
@@ -17172,6 +17374,7 @@ Transform:
   - {fileID: 275569583}
   - {fileID: 136589794}
   - {fileID: 1481877115}
+  - {fileID: 346906454}
   m_Father: {fileID: 1891574433}
   m_LocalEulerAnglesHint: {x: -89.98, y: 0, z: 0}
 --- !u!23 &818082128
@@ -17529,6 +17732,7 @@ Transform:
   - {fileID: 731367063}
   - {fileID: 489619694}
   - {fileID: 1387597825}
+  - {fileID: 1927026773}
   m_Father: {fileID: 1891574433}
   m_LocalEulerAnglesHint: {x: -89.98, y: 0, z: 180}
 --- !u!23 &821238545
@@ -18547,6 +18751,64 @@ Light:
   m_UseViewFrustumForShadowCasterCull: 1
   m_ShadowRadius: 0
   m_ShadowAngle: 0
+--- !u!1 &870360336
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 870360338}
+  - component: {fileID: 870360337}
+  m_Layer: 0
+  m_Name: LocalNPCSpawner_1F
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &870360337
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 870360336}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 357a296f296500644970743098dc556d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  npcPrefab: {fileID: 1919213435325607716, guid: f432fc398c71e86429cd30b6b75bb43c, type: 3}
+  count: 5
+  spawnRadius: 5
+  exhibits:
+  - {fileID: 1811207245}
+  - {fileID: 1107147758}
+  - {fileID: 99068119}
+  - {fileID: 1927026773}
+  - {fileID: 33883339}
+  - {fileID: 1076923867}
+  - {fileID: 1050225324}
+  - {fileID: 1740828012}
+  - {fileID: 1707402865}
+  - {fileID: 346906454}
+--- !u!4 &870360338
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 870360336}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 5.64, y: 1.1, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &873021839
 GameObject:
   m_ObjectHideFlags: 0
@@ -21468,6 +21730,7 @@ Transform:
   - {fileID: 2144911346}
   - {fileID: 2035955165}
   - {fileID: 1783964800}
+  - {fileID: 1740828012}
   m_Father: {fileID: 1891574433}
   m_LocalEulerAnglesHint: {x: -89.98, y: 0, z: 90}
 --- !u!23 &1047499751
@@ -21679,6 +21942,37 @@ MeshCollider:
   m_Convex: 0
   m_CookingOptions: 30
   m_Mesh: {fileID: 4711208715938537054, guid: d8f311abb70b14641939851e15a81569, type: 3}
+--- !u!1 &1050225323
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1050225324}
+  m_Layer: 0
+  m_Name: Exhibit_07_LookPoint
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1050225324
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1050225323}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: -0.038, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1203935767}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &1052519592
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -22364,6 +22658,37 @@ Transform:
   m_Children: []
   m_Father: {fileID: 1994698877}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1076923866
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1076923867}
+  m_Layer: 0
+  m_Name: Exhibit_06_LookPoint
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1076923867
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1076923866}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0.0365, y: 0, z: -0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1541968197}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &1078463744
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -22865,6 +23190,37 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 1f73edc8925f3fb4d9a39776ca4feb18, type: 3}
+--- !u!1 &1107147757
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1107147758}
+  m_Layer: 0
+  m_Name: Exhibit_02_LookPoint
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1107147758
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1107147757}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0.0442, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1958132795}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1111014598
 GameObject:
   m_ObjectHideFlags: 0
@@ -23777,6 +24133,13 @@ MonoBehaviour:
   secondaryGrabDistance: 0.3
   useIndexTrigger: 0
   pressThreshold: 0.55
+  enableHaptics: 1
+  grabHapticAmp: 0.6
+  grabHapticFreq: 0.9
+  grabHapticDuration: 0.08
+  secondaryHapticAmp: 0.4
+  secondaryHapticFreq: 0.9
+  secondaryHapticDuration: 0.06
 --- !u!114 &1160867470
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -24329,6 +24692,7 @@ Transform:
   - {fileID: 1665832878}
   - {fileID: 864785137}
   - {fileID: 1217623321}
+  - {fileID: 1050225324}
   m_Father: {fileID: 1891574433}
   m_LocalEulerAnglesHint: {x: -89.98, y: 0, z: 0}
 --- !u!23 &1203935768
@@ -24521,6 +24885,7 @@ Transform:
   - {fileID: 2044040809}
   - {fileID: 1278392721}
   - {fileID: 2123473181}
+  - {fileID: 33883339}
   m_Father: {fileID: 1891574433}
   m_LocalEulerAnglesHint: {x: -89.98, y: 0, z: -90}
 --- !u!23 &1216999551
@@ -25539,6 +25904,13 @@ MonoBehaviour:
   secondaryGrabDistance: 0.3
   useIndexTrigger: 0
   pressThreshold: 0.55
+  enableHaptics: 1
+  grabHapticAmp: 0.6
+  grabHapticFreq: 0.9
+  grabHapticDuration: 0.08
+  secondaryHapticAmp: 0.4
+  secondaryHapticFreq: 0.9
+  secondaryHapticDuration: 0.06
 --- !u!114 &1262859732
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -26238,6 +26610,13 @@ MonoBehaviour:
   secondaryGrabDistance: 0.3
   useIndexTrigger: 0
   pressThreshold: 0.55
+  enableHaptics: 1
+  grabHapticAmp: 0.6
+  grabHapticFreq: 0.9
+  grabHapticDuration: 0.08
+  secondaryHapticAmp: 0.4
+  secondaryHapticFreq: 0.9
+  secondaryHapticDuration: 0.06
 --- !u!114 &1298318499
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -27109,6 +27488,13 @@ MonoBehaviour:
   secondaryGrabDistance: 0.3
   useIndexTrigger: 0
   pressThreshold: 0.55
+  enableHaptics: 1
+  grabHapticAmp: 0.6
+  grabHapticFreq: 0.9
+  grabHapticDuration: 0.08
+  secondaryHapticAmp: 0.4
+  secondaryHapticFreq: 0.9
+  secondaryHapticDuration: 0.06
 --- !u!114 &1314863407
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -31931,6 +32317,13 @@ MonoBehaviour:
   secondaryGrabDistance: 0.3
   useIndexTrigger: 0
   pressThreshold: 0.55
+  enableHaptics: 1
+  grabHapticAmp: 0.6
+  grabHapticFreq: 0.9
+  grabHapticDuration: 0.08
+  secondaryHapticAmp: 0.4
+  secondaryHapticFreq: 0.9
+  secondaryHapticDuration: 0.06
 --- !u!114 &1535800553
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -32171,6 +32564,7 @@ Transform:
   - {fileID: 1814180141}
   - {fileID: 1441097270}
   - {fileID: 1521384528}
+  - {fileID: 1076923867}
   m_Father: {fileID: 1891574433}
   m_LocalEulerAnglesHint: {x: -89.98, y: 0, z: 90}
 --- !u!23 &1541968198
@@ -34586,6 +34980,54 @@ MonoBehaviour:
     m_Bits: 4294967295
   pointer: {fileID: 0}
   sortOrder: 0
+--- !u!1 &1638137658
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1638137660}
+  - component: {fileID: 1638137659}
+  m_Layer: 0
+  m_Name: LocalNPCSpawner_2F
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1638137659
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1638137658}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 357a296f296500644970743098dc556d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  npcPrefab: {fileID: 1919213435325607716, guid: f432fc398c71e86429cd30b6b75bb43c, type: 3}
+  count: 3
+  spawnRadius: 5
+  exhibits: []
+--- !u!4 &1638137660
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1638137658}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 5.64, y: 9.031, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1640123542
 GameObject:
   m_ObjectHideFlags: 0
@@ -35286,6 +35728,13 @@ MonoBehaviour:
   secondaryGrabDistance: 0.3
   useIndexTrigger: 0
   pressThreshold: 0.55
+  enableHaptics: 1
+  grabHapticAmp: 0.6
+  grabHapticFreq: 0.9
+  grabHapticDuration: 0.08
+  secondaryHapticAmp: 0.4
+  secondaryHapticFreq: 0.9
+  secondaryHapticDuration: 0.06
 --- !u!114 &1665832881
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -35822,6 +36271,37 @@ Transform:
   - {fileID: 1166992516}
   - {fileID: 1049756900}
   m_Father: {fileID: 1813351667}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1707402864
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1707402865}
+  m_Layer: 0
+  m_Name: Exhibit_09_LookPoint
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1707402865
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1707402864}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -0.032, y: 0, z: -0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1997630336}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1708220383 stripped
 GameObject:
@@ -36422,6 +36902,37 @@ MeshCollider:
   m_Convex: 0
   m_CookingOptions: 30
   m_Mesh: {fileID: 70948873267775455, guid: 08931fb8fc36dc54f9b625f98bd4d550, type: 3}
+--- !u!1 &1740828011
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1740828012}
+  m_Layer: 0
+  m_Name: Exhibit_08_LookPoint
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1740828012
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1740828011}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -0.0332, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1047499750}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &1748126986
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -37843,6 +38354,13 @@ MonoBehaviour:
   secondaryGrabDistance: 0.3
   useIndexTrigger: 0
   pressThreshold: 0.55
+  enableHaptics: 1
+  grabHapticAmp: 0.6
+  grabHapticFreq: 0.9
+  grabHapticDuration: 0.08
+  secondaryHapticAmp: 0.4
+  secondaryHapticFreq: 0.9
+  secondaryHapticDuration: 0.06
 --- !u!114 &1807381418
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -37867,6 +38385,37 @@ MonoBehaviour:
   sceneViewId: 17
   InstantiationId: 0
   isRuntimeInstantiated: 0
+--- !u!1 &1811207244
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1811207245}
+  m_Layer: 0
+  m_Name: Exhibit_01_LookPoint
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1811207245
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1811207244}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -0.0352, y: 0, z: -0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1994698877}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &1811938109
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -38235,6 +38784,13 @@ MonoBehaviour:
   secondaryGrabDistance: 0.3
   useIndexTrigger: 0
   pressThreshold: 0.55
+  enableHaptics: 1
+  grabHapticAmp: 0.6
+  grabHapticFreq: 0.9
+  grabHapticDuration: 0.08
+  secondaryHapticAmp: 0.4
+  secondaryHapticFreq: 0.9
+  secondaryHapticDuration: 0.06
 --- !u!114 &1814180145
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -40099,6 +40655,42 @@ PrefabInstance:
       insertIndex: -1
       addedObject: {fileID: 1320723519}
   m_SourcePrefab: {fileID: 100100000, guid: 4db9865a52cc06f4495c5d33d2e05ee7, type: 3}
+--- !u!1 &1903546532 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: 4a5d174bbf97e474ea0dea4e8d8a417d, type: 3}
+  m_PrefabInstance: {fileID: 594660613}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &1903546533
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1903546532}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7a5ac11cc976e418e8d13136b07e1f52, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_AgentTypeID: 0
+  m_CollectObjects: 0
+  m_Size: {x: 10, y: 10, z: 10}
+  m_Center: {x: 0, y: 2, z: 0}
+  m_LayerMask:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_UseGeometry: 0
+  m_DefaultArea: 0
+  m_GenerateLinks: 0
+  m_IgnoreNavMeshAgent: 1
+  m_IgnoreNavMeshObstacle: 1
+  m_OverrideTileSize: 0
+  m_TileSize: 256
+  m_OverrideVoxelSize: 0
+  m_VoxelSize: 0.16666667
+  m_MinRegionArea: 2
+  m_NavMeshData: {fileID: 23800000, guid: cee371ba9abc5ff40817f4411c6cdfcf, type: 2}
+  m_BuildHeightMesh: 0
 --- !u!1 &1904048387
 GameObject:
   m_ObjectHideFlags: 0
@@ -40536,6 +41128,37 @@ PrefabInstance:
       insertIndex: -1
       addedObject: {fileID: 1915970474}
   m_SourcePrefab: {fileID: 100100000, guid: 56c6d6f659d42634eac2fd9486b0cd37, type: 3}
+--- !u!1 &1927026772
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1927026773}
+  m_Layer: 0
+  m_Name: Exhibit_04_LookPoint
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1927026773
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1927026772}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: -0.0422, z: -0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 821238544}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &1931374655
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -41436,6 +42059,7 @@ Transform:
   - {fileID: 501443735}
   - {fileID: 941140148}
   - {fileID: 1759214200}
+  - {fileID: 1107147758}
   m_Father: {fileID: 1891574433}
   m_LocalEulerAnglesHint: {x: -89.98, y: 0, z: -90}
 --- !u!23 &1958132796
@@ -41666,6 +42290,13 @@ MonoBehaviour:
   secondaryGrabDistance: 0.3
   useIndexTrigger: 0
   pressThreshold: 0.55
+  enableHaptics: 1
+  grabHapticAmp: 0.6
+  grabHapticFreq: 0.9
+  grabHapticDuration: 0.08
+  secondaryHapticAmp: 0.4
+  secondaryHapticFreq: 0.9
+  secondaryHapticDuration: 0.06
 --- !u!114 &1960615998
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -42143,6 +42774,13 @@ MonoBehaviour:
   secondaryGrabDistance: 0.3
   useIndexTrigger: 0
   pressThreshold: 0.55
+  enableHaptics: 1
+  grabHapticAmp: 0.6
+  grabHapticFreq: 0.9
+  grabHapticDuration: 0.08
+  secondaryHapticAmp: 0.4
+  secondaryHapticFreq: 0.9
+  secondaryHapticDuration: 0.06
 --- !u!114 &1968439770
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -42724,6 +43362,7 @@ Transform:
   - {fileID: 353210818}
   - {fileID: 52533477}
   - {fileID: 1076588964}
+  - {fileID: 1811207245}
   m_Father: {fileID: 1891574433}
   m_LocalEulerAnglesHint: {x: -89.98, y: 0, z: -90}
 --- !u!23 &1994698878
@@ -42832,6 +43471,7 @@ Transform:
   - {fileID: 542184476}
   - {fileID: 1578361446}
   - {fileID: 456582928}
+  - {fileID: 1707402865}
   m_Father: {fileID: 1891574433}
   m_LocalEulerAnglesHint: {x: -89.98, y: 0, z: -90}
 --- !u!23 &1997630337
@@ -43968,6 +44608,13 @@ MonoBehaviour:
   secondaryGrabDistance: 0.3
   useIndexTrigger: 0
   pressThreshold: 0.55
+  enableHaptics: 1
+  grabHapticAmp: 0.6
+  grabHapticFreq: 0.9
+  grabHapticDuration: 0.08
+  secondaryHapticAmp: 0.4
+  secondaryHapticFreq: 0.9
+  secondaryHapticDuration: 0.06
 --- !u!114 &2044040813
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -46334,6 +46981,13 @@ MonoBehaviour:
   secondaryGrabDistance: 0.3
   useIndexTrigger: 0
   pressThreshold: 0.55
+  enableHaptics: 1
+  grabHapticAmp: 0.6
+  grabHapticFreq: 0.9
+  grabHapticDuration: 0.08
+  secondaryHapticAmp: 0.4
+  secondaryHapticFreq: 0.9
+  secondaryHapticDuration: 0.06
 --- !u!114 &2144911349
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -47423,3 +48077,5 @@ SceneRoots:
   - {fileID: 104949883}
   - {fileID: 666351565}
   - {fileID: 1823742443}
+  - {fileID: 870360338}
+  - {fileID: 1638137660}
