@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using System.Collections;
 
 [RequireComponent(typeof(OVRGrabbable))]
 public class K_TwoHandSupportGrip_OVR : MonoBehaviour
@@ -16,12 +17,24 @@ public class K_TwoHandSupportGrip_OVR : MonoBehaviour
     public bool useIndexTrigger = false;   // true=검지 트리거, false=그립(HandTrigger)
     public float pressThreshold = 0.55f;
 
+    [Header("Haptics (진동)")]
+    public bool enableHaptics = true;
+    public float grabHapticAmp = 0.6f;      // 0~1
+    public float grabHapticFreq = 0.9f;     // 0~1 (체감상 큰 의미는 적지만 가능)
+    public float grabHapticDuration = 0.08f;
+
+    public float secondaryHapticAmp = 0.4f;
+    public float secondaryHapticFreq = 0.9f;
+    public float secondaryHapticDuration = 0.06f;
+
     OVRGrabbable grabbable;
     OVRGrabber primary;
     OVRGrabber secondary;
 
     Quaternion rotOffset;
     Collider mainCol;
+
+    bool wasGrabbed = false;   // ✅ 잡힘 상태 변화 감지용
 
     void Awake()
     {
@@ -31,6 +44,28 @@ public class K_TwoHandSupportGrip_OVR : MonoBehaviour
 
     void Update()
     {
+        // ✅ "잡는 순간" 진동 (안 잡힘 -> 잡힘)
+        if (!wasGrabbed && grabbable.isGrabbed)
+        {
+            var p = grabbable.grabbedBy;
+            if (enableHaptics && p != null)
+                StartCoroutine(HapticPulse(GetController(p), grabHapticFreq, grabHapticAmp, grabHapticDuration));
+        }
+
+        // ✅ 놓는 순간 정리
+        if (wasGrabbed && !grabbable.isGrabbed)
+        {
+            primary = null;
+            secondary = null;
+
+            // 혹시 남아있을 진동 끄기
+            StopAllCoroutines();
+            OVRInput.SetControllerVibration(0, 0, OVRInput.Controller.LTouch);
+            OVRInput.SetControllerVibration(0, 0, OVRInput.Controller.RTouch);
+        }
+
+        wasGrabbed = grabbable.isGrabbed;
+
         if (!grabbable.isGrabbed)
         {
             primary = null;
@@ -50,6 +85,10 @@ public class K_TwoHandSupportGrip_OVR : MonoBehaviour
             if (IsPressed(other) && IsClose(other))
             {
                 secondary = other;
+
+                // ✅ 보조 손 붙는 순간 진동
+                if (enableHaptics)
+                    StartCoroutine(HapticPulse(GetController(secondary), secondaryHapticFreq, secondaryHapticAmp, secondaryHapticDuration));
 
                 Vector3 dir0 = GetPos(secondary) - GetPos(primary);
                 if (dir0.sqrMagnitude < 1e-6f) dir0 = primary.transform.forward;
@@ -90,7 +129,6 @@ public class K_TwoHandSupportGrip_OVR : MonoBehaviour
 
     Vector3 GetPos(OVRGrabber g)
     {
-        // ✅ OVRGrabber 내부 gripTransform에 접근하지 말고, 직접 넣은 Transform을 사용
         if (g == leftGrabber && leftGripTransform != null) return leftGripTransform.position;
         if (g == rightGrabber && rightGripTransform != null) return rightGripTransform.position;
 
@@ -109,5 +147,18 @@ public class K_TwoHandSupportGrip_OVR : MonoBehaviour
             axis = isRight ? OVRInput.Axis1D.SecondaryHandTrigger : OVRInput.Axis1D.PrimaryHandTrigger;
 
         return OVRInput.Get(axis, controller) >= pressThreshold;
+    }
+
+    // ---- Haptics helpers ----
+    OVRInput.Controller GetController(OVRGrabber g)
+    {
+        return (g == rightGrabber) ? OVRInput.Controller.RTouch : OVRInput.Controller.LTouch;
+    }
+
+    IEnumerator HapticPulse(OVRInput.Controller controller, float freq, float amp, float duration)
+    {
+        OVRInput.SetControllerVibration(freq, amp, controller);
+        yield return new WaitForSeconds(duration);
+        OVRInput.SetControllerVibration(0, 0, controller);
     }
 }
