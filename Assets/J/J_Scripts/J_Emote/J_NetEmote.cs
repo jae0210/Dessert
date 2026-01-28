@@ -1,5 +1,4 @@
-﻿using System.Collections;
-using Photon.Pun;
+﻿using Photon.Pun;
 using UnityEngine;
 
 public class J_NetEmote : MonoBehaviourPun
@@ -15,14 +14,9 @@ public class J_NetEmote : MonoBehaviourPun
     [SerializeField] private float showSeconds = 2f;
     [SerializeField] private bool showSelfInFront = true;
 
-    private Coroutine headRoutine;
-    private Coroutine frontRoutine;
-
-    // 토큰(시퀀스)으로 최신 재생만 유효하게 만들기
-    private int headSeq = 0;
-    private int frontSeq = 0;
-
-    public Sprite[] EmoteSprites => emotes;
+    // unscaled 기준 “꺼질 시간”
+    private float headHideAt = -1f;
+    private float frontHideAt = -1f;
 
     // 로컬 입력에서 호출
     public void RequestEmote(int emoteIndex)
@@ -43,18 +37,32 @@ public class J_NetEmote : MonoBehaviourPun
         PlayOnHead(emoteIndex);
     }
 
+    private void Update()
+    {
+        float now = Time.unscaledTime;
+
+        if (headEmoteRenderer != null && headEmoteRenderer.enabled && headHideAt > 0f && now >= headHideAt)
+        {
+            headEmoteRenderer.enabled = false;
+            headHideAt = -1f;
+        }
+
+        if (frontEmoteRenderer != null && frontEmoteRenderer.enabled && frontHideAt > 0f && now >= frontHideAt)
+        {
+            frontEmoteRenderer.enabled = false;
+            frontHideAt = -1f;
+        }
+    }
+
     private void PlayOnHead(int emoteIndex)
     {
         if (!IsValidIndex(emoteIndex) || headEmoteRenderer == null) return;
 
-        headSeq++;
-        int seq = headSeq;
-
         headEmoteRenderer.sprite = emotes[emoteIndex];
         headEmoteRenderer.enabled = true;
 
-        if (headRoutine != null) StopCoroutine(headRoutine);
-        headRoutine = StartCoroutine(HideAfter(headEmoteRenderer, showSeconds, seq, isHead: true));
+        // showSeconds가 0 이하라도 “즉시 숨김”되게 처리
+        headHideAt = Time.unscaledTime + Mathf.Max(0.01f, showSeconds);
     }
 
     private void PlayOnFront(int emoteIndex)
@@ -68,33 +76,20 @@ public class J_NetEmote : MonoBehaviourPun
             return;
         }
 
-        frontSeq++;
-        int seq = frontSeq;
-
         frontEmoteRenderer.sprite = emotes[emoteIndex];
         frontEmoteRenderer.enabled = true;
 
-        if (frontRoutine != null) StopCoroutine(frontRoutine);
-        frontRoutine = StartCoroutine(HideAfter(frontEmoteRenderer, showSeconds, seq, isHead: false));
+        frontHideAt = Time.unscaledTime + Mathf.Max(0.01f, showSeconds);
     }
 
-    private IEnumerator HideAfter(SpriteRenderer r, float seconds, int seq, bool isHead)
+    private void OnDisable()
     {
-        yield return new WaitForSeconds(seconds);
+        // 혹시 비활성화되면서 “켜진 채로” 남는 걸 방지
+        if (headEmoteRenderer != null) headEmoteRenderer.enabled = false;
+        if (frontEmoteRenderer != null) frontEmoteRenderer.enabled = false;
 
-        // 최신 요청이 아닐 경우(중간에 다른 이모티콘이 재생된 경우) 무시
-        if (isHead)
-        {
-            if (seq != headSeq) yield break;
-            headRoutine = null;
-        }
-        else
-        {
-            if (seq != frontSeq) yield break;
-            frontRoutine = null;
-        }
-
-        if (r != null) r.enabled = false;
+        headHideAt = -1f;
+        frontHideAt = -1f;
     }
 
     private bool IsValidIndex(int index)
